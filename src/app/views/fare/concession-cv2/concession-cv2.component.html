@@ -1,0 +1,34 @@
+<div class="concession-cv2">
+    <ng-container *ngIf="step === 1">
+        <confirm-dialog
+            [title]="'Proceed to wait for Concession Card Results from the CV2 Unit'"
+            [content]="'Press Enter to confirm.'"
+            [btnCancel]="true"
+            [btnConfirm]="true"
+            (onCancel)="handleConfirmConcession(false)"
+            (onConfirm)="handleConfirmConcession(true)"
+        >
+        </confirm-dialog>
+    </ng-container>
+
+    <ng-container *ngIf="step === 2">
+        <confirm-dialog
+            [title]="'Concession at CV2 is In Progress'"
+            [content]="'Press the X button to cancel'"
+            [btnCancel]="true"
+            (onCancel)="handleConcession()"
+        >
+        </confirm-dialog>
+    </ng-container>
+
+    <ng-container *ngIf="step === 3">
+        <confirm-dialog [title]="'Success'" content="CV2 Concession" [btnOK]="true" (onOK)="handleFinish()">
+            <div *ngIf="success" style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+            </div>
+            <div *ngIf="!success" style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+            </div>
+        </confirm-dialog>
+    </ng-container>
+</div>

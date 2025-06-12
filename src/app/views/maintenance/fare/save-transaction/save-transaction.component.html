@@ -1,0 +1,55 @@
+<div class="save-transaction-page">
+    <!-- <div *ngIf="step === 1" class="step-1">
+        <h2 class="title">{{ 'SAVE_TRANSACTION' | translate }}</h2>
+        <div class="content">
+            <p>{{ 'PRESS_SAVE_TRANSACTION_TO_LOAD_PARAMETERS' | translate }}</p>
+            <div class="button" (click)="handleSaveTransaction()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <div class="text">{{ 'SAVE_TRANSACTION' | translate }}</div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <confirm-dialog
+        *ngIf="step === 1"
+        [title]="'SAVING_TRANSACTIONS' | translate"
+        [content]="'PLEASE_WAIT' | translate"
+    >
+        <div class="progress-bar" content>
+            <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+        </div>
+    </confirm-dialog> -->
+
+    <div *ngIf="step === 1" class="progress-wrapper">
+        <h2 class="title">{{ 'SAVING_TRANSACTIONS' | translate }}</h2>
+        <div class="content">{{ 'PLEASE_WAIT' | translate }}</div>
+        <div class="progress-bar" content>
+            <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+        </div>
+    </div>
+
+    <div *ngIf="step === 2" class="confirmation">
+        <h2 class="title">{{ 'SUCCESS' | translate }}</h2>
+        <div class="content">
+            <div class="confirm">{{ 'TRANSACTION_FILE_SAVED' | translate }}</div>
+            <div class="btn-group">
+                <div class="btn btn-confirm" (click)="handleFinishTransaction()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'OKAY' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <confirm-dialog
+        *ngIf="step === 3"
+        [title]="success ? ('SUCCESS' | translate) : ('ERROR' | translate)"
+        [content]="success ? ('TRANSACTION_FILE_SAVED' | translate) : ('SAVE_TRANSCATION_FAILED' | translate)"
+        [btnOK]="true"
+        (onOK)="handleFinishTransaction()"
+    >
+        <div style="margin-bottom: 20px" icon>
+            <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+        </div>
+    </confirm-dialog> -->
+</div>

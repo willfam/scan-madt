@@ -1,0 +1,43 @@
+@if (bootUpdata.error?.criticalError || bootUpdata.error?.error) {
+    <div class="error-wrapper">
+        <div>
+            <div>
+                <h2 class="text-bold">
+                    Critical Error: {{ bootUpdata.error?.criticalError }} | Error: {{ bootUpdata.error?.error }}
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="wrapper">
+    <div>
+        <h1 class="text-center text-bold">Version Information</h1>
+        <table class="custom-table ver-table">
+            <tr>
+                <td>SOFTWARE:</td>
+                <td>{{ bootUpdata.softwareVersion }}</td>
+            </tr>
+            <tr>
+                <td>OS VERSION:</td>
+                <td>{{ bootUpdata.osVersion }}</td>
+            </tr>
+            <tr>
+                <td>DATE:</td>
+                <td>{{ bootUpdata.releaseDate }}</td>
+            </tr>
+            <tr>
+                <td>S/N:</td>
+                <td>{{ bootUpdata.serialNumber }}</td>
+            </tr>
+            <tr>
+                <td>SERVICE:</td>
+                <td>{{ bootUpdata.service }}</td>
+            </tr>
+            <tr>
+                <td>BUS ID:</td>
+                <td>{{ bootUpdata.busId }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

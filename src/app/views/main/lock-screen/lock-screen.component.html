@@ -1,0 +1,56 @@
+<div class="lock-container">
+    <ng-container *ngIf="!lockScreen.msgID || lockScreen.msgID === MsgID.LOCK">
+        <!-- <div class="page-header">
+            <div class="button" (click)="backToMain()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div> -->
+        <div class="confirm">
+            <div class="confirm-header">{{ 'SURE_WANT_TO_LOCK' | translate }}</div>
+            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="handleConfirm(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleConfirm(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div *ngIf="lockScreen.msgID === MsgID.LOCK_CONFIRM" class="lta-lock-page">
+        <div class="lta-full-screen">
+            <div class="lta-logo"></div>
+            <h3 class="title">{{ 'LOCKED' | translate }}</h3>
+            <div class="content">{{ 'CLICK_BTN_TO_UNLOCK' | translate }}</div>
+            <div class="btn-group">
+                <div class="btn btn-confirm" (click)="handleUnlock()">
+                    <img src="/assets/images/icons/main/lock.svg" alt="" />
+                    <span>{{ 'UNLOCK_MADT' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="lockScreen.msgID === MsgID.UNLOCK_SUBMIT" class="lta-lock-page">
+        <div class="lta-unlock">
+            <div class="back-button" (click)="handleBack()">Back</div>
+            <div class="unlock-group">
+                <h2 class="title">{{ 'ENTER_PIN_TO_UNLOCK' | translate }}</h2>
+                <div class="input-group">
+                    <input id="inputField" type="password" />
+                    <p *ngIf="lockScreen.message" class="error">
+                        {{ lockScreen.message | translate }}
+                    </p>
+                </div>
+            </div>
+            <div class="keyboard">
+                <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+            </div>
+        </div>
+    </div>
+</div>

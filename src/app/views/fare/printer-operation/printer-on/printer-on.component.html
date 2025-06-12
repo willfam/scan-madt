@@ -1,0 +1,29 @@
+<div class="printer-on">
+    <div class="back-button" (click)="goBack()">Back</div>
+    <div *ngIf="step === 1">
+        <h2 class="title">Printer ON</h2>
+        <div class="content">
+            <p class="label">
+                Press the “ON Printer” <br />
+                button to turn on.
+            </p>
+            <div class="btn-group">
+                <button class="button" (click)="handleSelect()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <div class="text">On Printer</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="step === 2">
+        <confirm-dialog title="Success" content="The Printer is ON" [btnOK]="true" (onOK)="handleFinish()">
+            <div *ngIf="success" style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+            </div>
+            <div *ngIf="!success" style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+            </div>
+        </confirm-dialog>
+    </ng-container>
+</div>

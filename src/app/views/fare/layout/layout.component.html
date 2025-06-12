@@ -1,0 +1,49 @@
+@if (!auth.isLoggedIn) {
+    <ng-container>
+        <app-header screen="fare"></app-header>
+        <div class="lta-full-screen">
+            <div class="lta-logo"></div>
+            <h3 class="title">{{ 'YOU_HAVE_BEEN_LOG_OFF' | translate }}</h3>
+            <div class="content">{{ 'PLEASE_LOGIN_FROM_MAIN_TAB' | translate }}</div>
+        </div>
+    </ng-container>
+} @else if (auth.isLoggedIn && auth.loggedInType !== 1) {
+    <ng-container>
+        <app-header screen="fare"></app-header>
+        <div class="lta-full-screen">
+            <div class="lta-logo"></div>
+            <h3 class="title">{{ 'ACCESS_DENIED' | translate }}</h3>
+        </div>
+    </ng-container>
+} @else if (!isOnTrip) {
+    <ng-container>
+        <app-header screen="fare"></app-header>
+        <div class="lta-full-screen">
+            <div class="lta-logo"></div>
+            <h3 class="title">{{ 'PENDING_TRIP_TO_START' | translate }}</h3>
+        </div>
+    </ng-container>
+} @else {
+    <ng-container>
+        <app-header screen="fare"></app-header>
+        <main>
+            <router-outlet></router-outlet>
+            @if (busOffRoute.show) {
+                <bus-off-route
+                    [disabled]="busOffRoute.disabled"
+                    (onOk)="handleTurnOffBusOfRoute()"
+                    [fullScreen]="true"
+                ></bus-off-route>
+            }
+            @if (disableBls.show) {
+                <auto-disable-bls
+                    [disabled]="disableBls.disabled"
+                    (onOk)="handleConfirmDisableBls(true)"
+                    (onCancel)="handleConfirmDisableBls(true)"
+                    [fullScreen]="true"
+                >
+                </auto-disable-bls>
+            }
+        </main>
+    </ng-container>
+}

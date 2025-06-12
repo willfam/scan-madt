@@ -1,0 +1,47 @@
+@import 'styles/_variables.scss';
+
+.display-audit-page {
+    text-align: center;
+    padding: 0 20px;
+
+    .title {
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    .table {
+        width: 100%;
+
+        th {
+            border-right: 1px solid $madt-bg-dark-2;
+        }
+
+        th,
+        tr {
+            font-size: 28px;
+            text-align: left;
+        }
+
+        th {
+            width: 480px;
+            text-align: left;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-left: 1px solid $madt-bg-dark-2;
+        }
+
+        tr:nth-child(odd) > th,
+        tr:nth-child(odd) > td {
+            background-color: $madt-bg-dark-2;
+        }
+
+        tr:nth-child(even) > th,
+        tr:nth-child(even) > td {
+            background-color: $madt-bg-dark-3;
+        }
+    }
+}

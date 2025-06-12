@@ -1,0 +1,407 @@
+<div class="cash-payment-container">
+    <ng-container *ngIf="['single', 'multi'].includes(fareMode)">
+        <ng-container *ngIf="step === 0">
+            <div class="page-header">
+                <h2>{{ 'CASH' | translate }}</h2>
+                <div class="button-group">
+                    <div class="tk-button" [class.active]="fareMode === 'single'" (click)="setFareMode('single')">
+                        {{ 'SINGLE_TICKET' | translate }}
+                    </div>
+                    <div class="tk-button" [class.active]="fareMode === 'multi'" (click)="setFareMode('multi')">
+                        {{ 'MULTIPLE_TICKET' | translate }}
+                    </div>
+                </div>
+                <div class="button" (click)="backToMain()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>{{ 'CLOSE' | translate }}</span>
+                </div>
+            </div>
+
+            <div class="cash-container">
+                <div class="cash-block adult-cash">
+                    <div class="cash-title">
+                        <img src="/assets/images/icons/main/adult-cash.svg" alt="" />
+                        <h4>{{ 'ADULT' | translate }}</h4>
+                    </div>
+                    <div class="cash-btn-block">
+                        @for (cashValue of adultValues; track cashValue) {
+                            <div class="cash-btn-wrap" (click)="setCash('Adult', cashValue)">
+                                <div class="cash-btn" [ngClass]="{ active: singleCashValue === cashValue }">
+                                    <!-- <div class="cash-img">
+                                        <img src="/assets/images/icons/main/adult-cash.svg" alt="" />
+                                    </div> -->
+                                    <div class="cash-value">{{ cashValue }}</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="cash-block senior-cash">
+                    <div class="cash-title">
+                        <img src="/assets/images/icons/main/senior-cash.svg" alt="" />
+                        <h4>{{ 'SENIOR' | translate }}</h4>
+                    </div>
+                    <div class="cash-btn-block">
+                        @for (cashValue of seniorValues; track cashValue) {
+                            <div class="cash-btn-wrap" (click)="setCash('Senior', cashValue)">
+                                <div class="cash-btn" [ngClass]="{ active: singleCashValue === cashValue }">
+                                    <!-- <div class="cash-img">
+                                    <img src="/assets/images/icons/main/senior-cash.svg" alt="" />
+                                </div> -->
+                                    <div class="cash-value">{{ cashValue }}</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="cash-block child-cash">
+                    <div class="cash-title">
+                        <img src="/assets/images/icons/main/student.svg" alt="" />
+                        <h4>{{ 'STUDENT' | translate }}</h4>
+                    </div>
+                    <div class="cash-btn-block">
+                        @for (cashValue of childValues; track cashValue) {
+                            <div class="cash-btn-wrap" (click)="setCash('Child', cashValue)">
+                                <div class="cash-btn" [ngClass]="{ active: singleCashValue === cashValue }">
+                                    <!-- <div class="cash-img">
+                                    <img src="/assets/images/icons/main/child-cash.svg" alt="" />
+                                </div> -->
+                                    <div class="cash-value">{{ cashValue }}</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn">
+                    <!-- <button class="btn" (click)="setFareMode('inspectorTicket')"> -->
+                    <img src="/assets/images/icons/main/inspector.svg" alt="" />
+                    <div class="text">{{ 'INSPECTOR_TICKET' | translate }}</div>
+                </button>
+                <button class="btn">
+                    <img src="/assets/images/icons/main/fare-box.svg" alt="" />
+                    <div class="text">{{ 'FARE_BOX' | translate }}</div>
+                </button>
+                <button class="btn" (click)="setFareMode('calculator')">
+                    <img src="/assets/images/icons/main/fare-calculator.svg" alt="" />
+                    <div class="text">{{ 'FARE_CALCULATOR' | translate }}</div>
+                </button>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="step === 1">
+            <!-- remove confirm popup, only display it when error happen -->
+            <!-- <ng-container *ngIf="fareMode === 'single'">
+                <div class="back-button" (click)="goBack()">{{ 'BACK' | translate }}</div>
+                <div class="confirm">
+                    <div class="confirm-header">
+                        <span>{{ cashType }} {{ 'CASH_FARE' | translate }}</span>
+                        <span>${{ singleCashValue / 100 }}</span>
+                    </div>
+                    <p class="confirm-msg">{{ 'CONFIRM_PRINT_TICKET' | translate }}</p>
+                    <div class="cf-btn-group">
+                        <div class="btn btn-cancel" (click)="goBack()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </div>
+                        <div class="btn btn-confirm" (click)="handlePrintingTicket()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>{{ 'CONFIRM' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container> -->
+
+            <ng-container *ngIf="fareMode === 'multi'">
+                <div class="multiple">
+                    <div class="page-header center">
+                        <div class="back-button abs" (click)="goBack()">{{ 'BACK' | translate }}</div>
+                        <h2>{{ cashType }} {{ 'CASH_FARE' | translate }} ${{ singleCashValue / 100 }}</h2>
+                    </div>
+                    <div class="confirm">
+                        <div class="input-group">
+                            <p>{{ 'INPUT_NUM_CASH_RECEIPT' | translate }}</p>
+                            <input id="inputField" />
+                            <div class="total-cash">
+                                <p class="total-cashlabel">Total Ticket Value:</p>
+                                <p class="total-cash-value">
+                                    ${{ ((quantity || 1) * (singleCashValue / 100)).toFixed(2) }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeInput($event)"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <!-- remove confirm popup, only display it when error happen -->
+        <!-- <div *ngIf="step === 2" class="dia-log step-2">
+            <div class="dia-log-main">
+                <h3 class="dia-log-title">Printing Ticket.</h3>
+                <div class="dia-log-content">Please wait...</div>
+                <div class="progress-bar">
+                    <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- remove confirm popup, only display it when error happen -->
+        <!-- <ng-container *ngIf="step === 3">
+            <confirm-dialog [title]="'Success'" content="Ticket Printed" [btnOK]="true" (onOK)="handleFinish()">
+                <div style="margin-bottom: 20px" icon>
+                    <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+                </div>
+            </confirm-dialog>
+        </ng-container> -->
+    </ng-container>
+
+    <div class="fare-calculator" *ngIf="fareMode === 'calculator'">
+        <app-dialog *ngIf="calculationStep === 0">
+            <div class="calculator">
+                <div class="header">
+                    <h3 class="title">
+                        {{ 'SELECT_EXIT_BUS_STOP' | translate }}
+                    </h3>
+                    <div class="close-btn" (click)="handleCloseCalculation()">
+                        <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                        <span>{{ 'CLOSE' | translate }}</span>
+                    </div>
+                </div>
+                <div class="calculator-content">
+                    <div class="scrollbar">
+                        <ng-scrollbar
+                            #scrollable
+                            [buttons]="true"
+                            trackClass="scrollbar-track"
+                            thumbClass="scrollbar-thumb"
+                            buttonClass="scrollbar-button"
+                        >
+                            <table class="table stripped">
+                                <tr>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'BUS_STOP' | translate }}</p>
+                                            <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" />
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'ADULT_FARE' | translate }}</p>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'STUDENT_FARE' | translate }}</p>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'SENIOR_FARE' | translate }}</p>
+                                        </div>
+                                    </th>
+                                </tr>
+                                @for (busStop of busStops; track busStop.id) {
+                                    <tr
+                                        class="radio"
+                                        [ngClass]="{ selected: selectedBusStop === busStop.id }"
+                                        (click)="handleSelectExitBusStop(busStop.id)"
+                                    >
+                                        <td>
+                                            <!-- <div class="radio" (click)="handleSelectExitBusStop(busStop.id)">
+                                                <img
+                                                    [src]="
+                                                        selectedBusStop === busStop.id
+                                                            ? '/assets/images/icons/maintenance/selected.svg'
+                                                            : '/assets/images/icons/maintenance/un-select.svg'
+                                                    "
+                                                    alt=""
+                                                />
+                                                <p>{{ busStop.label }}</p>
+                                            </div> -->
+                                            <p>{{ busStop.label }}</p>
+                                        </td>
+                                        <td>${{ busStop.adultFare }}</td>
+                                        <td>${{ busStop.childFare }}</td>
+                                        <td>${{ busStop.seniorFare }}</td>
+                                    </tr>
+                                }
+                            </table>
+                        </ng-scrollbar>
+                    </div>
+                </div>
+                <div
+                    class="confirm-button"
+                    (click)="calculationStep === 0 ? handleConfirmExitBusStop() : handleConfirmChangeBusStop()"
+                >
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </app-dialog>
+
+        <ng-container *ngIf="calculationStep === 1">
+            <div class="page-header">
+                <div class="back-button" (click)="fareCalculatorBack()">{{ 'BACK' | translate }}</div>
+                <div class="button" (click)="backToMain()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>{{ 'CLOSE' | translate }}</span>
+                </div>
+            </div>
+            <h2 class="step-title">{{ 'FARE_CAL_RESULT' | translate }}</h2>
+            <div class="scrollbar">
+                <ng-scrollbar
+                    #scrollable
+                    [buttons]="true"
+                    trackClass="scrollbar-track"
+                    thumbClass="scrollbar-thumb"
+                    buttonClass="scrollbar-button"
+                >
+                    <ul>
+                        <li class="row" (click)="handleChangeBusStop('entry')">
+                            <div class="left">{{ 'ENTRY_BUS_STOP' | translate }}</div>
+                            <div class="right">
+                                <p class="value">00.KM Bus Park</p>
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row" (click)="handleChangeBusStop('exit')">
+                            <div class="left">{{ 'EXIT_BUS_STOP' | translate }}</div>
+                            <div class="right">
+                                <p class="value">BISHAN INT BOARDING 2</p>
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'ADULT_FARE' | translate }}</div>
+                            <div class="right has-btn">
+                                <p class="value">$1.70</p>
+                                <button class="btn-receipt">
+                                    <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                    <div class="text">{{ 'ADULT_RECEIPT' | translate }}</div>
+                                </button>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'STUDENT_FARE' | translate }}</div>
+                            <div class="right has-btn">
+                                <p class="value">$0.85</p>
+                                <button class="btn-receipt">
+                                    <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                    <div class="text">{{ 'STUDENT_RECEIPT' | translate }}</div>
+                                </button>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'SENIOR_FARE' | translate }}</div>
+                            <div class="right has-btn">
+                                <p class="value">$1.20</p>
+                                <button class="btn-receipt" (click)="handleBtnClick('calculator')">
+                                    <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                    <div class="text">{{ 'SENIOR_RECEIPT' | translate }}</div>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </ng-scrollbar>
+            </div>
+            <!-- <div class="btn-group"></div> -->
+        </ng-container>
+
+        <app-dialog *ngIf="calculationStep === 2">
+            <div class="calculator">
+                <div class="header">
+                    <h3 class="title">{{ popUpTitle | translate }}</h3>
+                    <div class="close-btn" (click)="handleCloseBusStopPopUp()">
+                        <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                        <span>{{ 'CLOSE' | translate }}</span>
+                    </div>
+                </div>
+                <div class="calculator-content">
+                    <div class="scrollbar">
+                        <ng-scrollbar
+                            #scrollable
+                            [buttons]="true"
+                            trackClass="scrollbar-track"
+                            thumbClass="scrollbar-thumb"
+                            buttonClass="scrollbar-button"
+                        >
+                            <table class="table stripped">
+                                <tr>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'BUS_STOP' | translate }}</p>
+                                            <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" />
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'ADULT_FARE' | translate }}</p>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'STUDENT_STOP' | translate }}</p>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-header">
+                                            <p>{{ 'SENIOR_FARE' | translate }}</p>
+                                        </div>
+                                    </th>
+                                </tr>
+                                @for (busStop of busStops; track busStop.id) {
+                                    <tr
+                                        [ngClass]="{ selected: selectedBusStop === busStop.id }"
+                                        (click)="handleSelectExitBusStop(busStop.id)"
+                                    >
+                                        <td>{{ busStop.label }}</td>
+                                        <td>${{ busStop.adultFare }}</td>
+                                        <td>${{ busStop.childFare }}</td>
+                                        <td>${{ busStop.seniorFare }}</td>
+                                    </tr>
+                                }
+                            </table>
+                        </ng-scrollbar>
+                    </div>
+                </div>
+                <div class="confirm-button" (click)="handleConfirmChangeBusStop()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </app-dialog>
+    </div>
+
+    <!-- remove confirm popup, only display it when error happen -->
+    <!-- <ng-container *ngIf="fareMode === 'inspectorTicket'">
+        <div class="page-header full-row">
+            <div class="button" (click)="setFareMode('single')">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div>
+        <div class="confirm">
+            <div class="confirm-header">{{ 'PRINT_INSPEC_TICKET' | translate }}</div>
+            <p class="confirm-msg">{{ 'PRESS_CONFIRM_PRINT' | translate }}</p>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="setFareMode('single')">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="backToMain()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-container> -->
+</div>

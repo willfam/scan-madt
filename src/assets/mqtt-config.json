@@ -1,0 +1,46 @@
+{
+    "mqtt": {
+        "host": "broker.hivemq.com",
+        "protocol": "ws",
+        "port": "8000",
+        "keepalive": 30,
+        "path": "/mqtt"
+    },
+    "topics": {
+        "version": 1,
+        "mainTab": {
+            "get": "MADT/UpdateMainTab",
+            "response": "TC/UpdateMainTab"
+        },
+        "maintenance": {
+            "get": "MADT/UpdateMaintenanceTab",
+            "response": "TC/UpdateMaintenanceTab"
+        },
+        "fareTab": {
+            "get": "MADT/UpdateFareTab",
+            "response": "TC/UpdateFareTab"
+        },
+        "tcToAllTabs": "TC/UpdateAllTCTabs",
+        "madtToAllTabs": "MADT/UpdateAllTCTabs",
+        "cvIcon": {
+            "get": "MADT/UpdateMainTa/cv-icons",
+            "response": "TC/UpdateMainTab/cv-icons"
+        },
+        "mainPage": {
+            "get": "MADT/UpdateMainTab/Bus-info",
+            "response": "TC/UpdateMainTab/Bus-info"
+        },
+        "busDirInfo": {
+            "get": "MADT/UpdateMainTab/bus-direction",
+            "response": "TC/UpdateMainTab/bus-direction"
+        },
+        "currentVehicleJourney": {
+            "get": "MADT/UpdateMainTab/vehicle-journey",
+            "response": "TC/UpdateMainTab/vehicle-journey"
+        },
+        "vehicleState": {
+            "get": "MADT/UpdateMainTab/vehicle-state",
+            "response": "TC/UpdateMainTab/vehicle-state"
+        }
+    }
+}

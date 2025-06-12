@@ -1,0 +1,7 @@
+<div class="madt-breadcrumb" [id]="id">
+    <ng-content select="[icon]"></ng-content>
+    <ng-container *ngFor="let bc of breadcrumbs; let last = last">
+        <a [routerLink]="bc.link" [ngClass]="{ 'font-weight-bold': last }">{{ bc.label | translate }}</a>
+        <span *ngIf="!last">></span>
+    </ng-container>
+</div>

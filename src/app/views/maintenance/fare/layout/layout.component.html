@@ -1,0 +1,34 @@
+<ng-container>
+    <!-- <app-header screen="maintenance"></app-header> -->
+    <div class="maintenance-fare-layout">
+        <div class="layout">
+            <app-breadcrumb [id]="'maintenanceBreadcrumb'">
+                <img src="/assets/images/icons/maintenance/gear.svg" alt="" icon />
+            </app-breadcrumb>
+            <div class="madt-main">
+                <div class="madt-side-nav">
+                    <!-- <div class="menu"> -->
+                    <ng-scrollbar #scrollable class="menu">
+                        @for (menu of menus; track menu.id) {
+                            <a
+                                class="menu-item"
+                                [routerLink]="'/maintenance/fare' + [menu.route]"
+                                [ngClass]="{ active: activeMenu?.id === menu.id }"
+                                (click)="handleActiveMenu(menu)"
+                            >
+                                {{ menu.label | translate }}
+                            </a>
+                        }
+                    </ng-scrollbar>
+                    <!-- </div> -->
+                    <div class="menu-direction">
+                        <img src="/assets/images/icons/maintenance/arrow-down.svg" alt="" icon />
+                    </div>
+                </div>
+                <div class="madt-content">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

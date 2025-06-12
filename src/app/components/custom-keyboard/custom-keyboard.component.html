@@ -1,0 +1,61 @@
+<div *ngIf="layout === 'numeric'" class="numeric-keyboard">
+    <button class="btn" (click)="handleChangeInput($event)">1</button>
+    <button class="btn" (click)="handleChangeInput($event)">2</button>
+    <button class="btn" (click)="handleChangeInput($event)">3</button>
+    <button class="btn" (click)="handleChangeInput($event)">4</button>
+    <button class="btn" (click)="handleChangeInput($event)">5</button>
+    <button class="btn btn-delete" id="backspaceKey" (click)="handleChangeInput($event)">
+        <!-- <img src="/assets/images/icons/maintenance/keyboard-delete.svg" alt="" /> -->
+    </button>
+    <button class="btn" (click)="handleChangeInput($event)">6</button>
+    <button class="btn" (click)="handleChangeInput($event)">7</button>
+    <button class="btn" (click)="handleChangeInput($event)">8</button>
+    <button class="btn" (click)="handleChangeInput($event)">9</button>
+    <button class="btn" (click)="handleChangeInput($event)">0</button>
+    <button class="btn btn-confirm" id="enterKey" (click)="handleChangeInput($event)">
+        {{ 'CONFIRM' | translate }}
+    </button>
+</div>
+
+<div *ngIf="layout === 'text'" class="text-keyboard">
+    <div class="row">
+        <button class="btn" (click)="handleChangeInput($event)">Q</button>
+        <button class="btn" (click)="handleChangeInput($event)">W</button>
+        <button class="btn" (click)="handleChangeInput($event)">E</button>
+        <button class="btn" (click)="handleChangeInput($event)">R</button>
+        <button class="btn" (click)="handleChangeInput($event)">T</button>
+        <button class="btn" (click)="handleChangeInput($event)">Y</button>
+        <button class="btn" (click)="handleChangeInput($event)">U</button>
+        <button class="btn" (click)="handleChangeInput($event)">I</button>
+        <button class="btn" (click)="handleChangeInput($event)">O</button>
+        <button class="btn" (click)="handleChangeInput($event)">P</button>
+        <button class="btn btn-delete" id="backspaceKey" (click)="handleChangeInput($event)">
+            <!-- <img src="/assets/images/icons/maintenance/keyboard-delete.svg" alt="" /> -->
+        </button>
+    </div>
+    <div class="row">
+        <button class="btn" (click)="handleChangeInput($event)">A</button>
+        <button class="btn" (click)="handleChangeInput($event)">S</button>
+        <button class="btn" (click)="handleChangeInput($event)">D</button>
+        <button class="btn" (click)="handleChangeInput($event)">F</button>
+        <button class="btn" (click)="handleChangeInput($event)">G</button>
+        <button class="btn" (click)="handleChangeInput($event)">H</button>
+        <button class="btn" (click)="handleChangeInput($event)">J</button>
+        <button class="btn" (click)="handleChangeInput($event)">K</button>
+        <button class="btn" (click)="handleChangeInput($event)">L</button>
+        <button class="btn btn-confirm" id="enterKey" (click)="handleChangeInput($event)">Confirm</button>
+    </div>
+    <div class="row">
+        <button class="btn" (click)="handleChangeInput($event)" id="switchKey1">123</button>
+        <button class="btn" (click)="handleChangeInput($event)">Z</button>
+        <button class="btn" (click)="handleChangeInput($event)">X</button>
+        <button class="btn" (click)="handleChangeInput($event)">C</button>
+        <button class="btn" (click)="handleChangeInput($event)">V</button>
+        <button class="btn" (click)="handleChangeInput($event)">B</button>
+        <button class="btn" (click)="handleChangeInput($event)">N</button>
+        <button class="btn" (click)="handleChangeInput($event)">M</button>
+        <button class="btn" (click)="handleChangeInput($event)">!</button>
+        <button class="btn" (click)="handleChangeInput($event)">?</button>
+        <button class="btn" (click)="handleChangeInput($event)" id="switchKey2">123</button>
+    </div>
+</div>

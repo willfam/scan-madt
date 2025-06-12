@@ -1,0 +1,97 @@
+<div class="redetect-cv-page">
+    <!-- <div *ngIf="step === 1" class="step-1">
+        <h2 class="title">{{ 'REDETECT_CV' | translate }}</h2>
+        <div class="content">
+            <p>{{ 'PRESS_SCAN_BDGIN_SCAN_ALL_AVAIL_CVS' | translate }}</p>
+            <div class="button" (click)="handleSaveTransaction()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <div class="text">{{ 'SCAN' | translate }}</div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <confirm-dialog
+        *ngIf="step === 1"
+        [title]="'SCANNING_BEV_BXV_DEVICES' | translate"
+        [content]="'PLEASE_WAIT' | translate"
+    >
+        <div class="progress-bar" content>
+            <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+        </div>
+    </confirm-dialog> -->
+
+    <div *ngIf="step === 1" class="progress-wrapper">
+        <h2 class="title">{{ 'SCANNING_BEV_BXV_DEVICES' | translate }}</h2>
+        <div class="content">{{ 'PLEASE_WAIT' | translate }}</div>
+        <div class="progress-bar" content>
+            <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+        </div>
+    </div>
+
+    <div *ngIf="step === 2" class="redect-cv-dialog">
+        <div class="redect-cv-dialog-header">
+            <h3>{{ 'CONFIRMED_INSTALLED_BEV_BXV' | translate }}</h3>
+        </div>
+        <div class="redect-cv-dialog-content">
+            <div class="scrollbar">
+                <ng-scrollbar
+                    #scrollable
+                    [buttons]="true"
+                    trackClass="scrollbar-track"
+                    thumbClass="scrollbar-thumb"
+                    buttonClass="scrollbar-button"
+                >
+                    <table class="table stripped">
+                        @for (cv of cvs; track cv.name) {
+                            <tr>
+                                <th>{{ cv.name }}</th>
+                                <td>{{ cv.status | translate }}</td>
+                                <td>{{ cv.extraStatus | translate }}</td>
+                            </tr>
+                        }
+                    </table>
+                </ng-scrollbar>
+            </div>
+        </div>
+        <div class="confirm-button" (click)="handleFinishTransaction()">
+            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+            <span class="text">Okay</span>
+        </div>
+    </div>
+
+    <!-- <app-dialog *ngIf="step === 3">
+        <div class="redect-cv-dialog">
+            <div class="redect-cv-dialog-header">
+                <h3>{{ 'CONFIRMED_INSTALLED_BEV_BXV' | translate }}</h3>
+            </div>
+            <div class="redect-cv-dialog-content">
+                <table class="table stripped">
+                    @for (cv of cvs; track cv.name) {
+                        <tr>
+                            <th>{{ cv.name }}</th>
+                            <td>{{ cv.status | translate }}</td>
+                            <td>{{ cv.extraStatus | translate }}</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="confirm-button" (click)="handleFinishTransaction()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span class="text">Okay</span>
+            </div>
+        </div>
+    </app-dialog> -->
+
+    <!-- <div *ngIf="step === 3" class="dia-log step-3">
+        <div class="dia-log-main">
+            <h3 class="dia-log-title"></h3>
+            <div class="dia-log-content">
+                <table class="table"></table>
+            </div>
+            <div class="button" (click)="handleFinishTransaction()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <div class="text">{{ 'OKAY' | translate }}</div>
+            </div>
+        </div>
+    </div> -->
+</div>

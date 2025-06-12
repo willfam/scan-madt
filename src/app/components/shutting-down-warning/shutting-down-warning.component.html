@@ -1,0 +1,13 @@
+<div class="ignition-off">
+    <div class="ignition-off-wrapper">
+        <img class="logo" src="assets/images/svg/ignition.svg" />
+        <h3 class="title">Ignition is Off</h3>
+        <div class="content">TC will automatically shutdown in 30 mins from {{ time | date: 'dd/MM/yyyy HH:ss' }}</div>
+        <div class="btn-group">
+            <button [disabled]="disabled" class="btn btn-ok" (click)="handleClick()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>OK</span>
+            </button>
+        </div>
+    </div>
+</div>

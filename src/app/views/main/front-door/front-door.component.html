@@ -1,0 +1,45 @@
+<div class="toggle-cv-container">
+    <ng-container *ngIf="cvMode === ''">
+        <div class="page-header">
+            <div class="button" (click)="handleCancel()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div>
+        <div class="dialog">
+            <div class="dialog-header">
+                <p>{{ 'TOGGLE_CV_ENTRY_EXIT' | translate }}</p>
+            </div>
+            <div class="button-control">
+                <div class="button" (click)="handleChangeCvMode('CV1')">
+                    <div class="icon-text">
+                        <div class="text">{{ 'CV_COUNT' | translate: { count: 1 } }}</div>
+                    </div>
+                </div>
+                <div class="button" (click)="handleChangeCvMode('CV2')">
+                    <div class="icon-text">
+                        <div class="text">{{ 'CV_COUNT' | translate: { count: 2 } }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="['CV1', 'CV2'].includes(cvMode)">
+        <div class="dialog">
+            <div class="dialog-header">
+                <p>{{ 'TOGGLE_CV_ET_EXT_MODE' | translate: { cv: cvMode } }}</p>
+            </div>
+            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+            <div class="cf-btn-group">
+                <div class="btn btn-cancel" (click)="handleCancel()">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleUpdateCV()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

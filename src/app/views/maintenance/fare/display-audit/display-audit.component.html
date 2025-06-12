@@ -1,0 +1,11 @@
+<div class="display-audit-page">
+    <h2 class="title">{{ 'AUDIT_REGISTERS' | translate }}</h2>
+    <table class="table">
+        @for (audit of auditRegistrationList; track audit.name) {
+            <tr>
+                <th>{{ audit.name | translate }}</th>
+                <td>{{ audit.value }}</td>
+            </tr>
+        }
+    </table>
+</div>

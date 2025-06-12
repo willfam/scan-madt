@@ -1,0 +1,111 @@
+<div class="show-cv-status">
+    <div class="page-header">
+        <div class="back-button" (click)="goBack()">{{ 'BACK' | translate }}</div>
+    </div>
+    <h2 class="title">Show CV Status</h2>
+    <div class="content">
+        <div class="scrollbar">
+            <ng-scrollbar
+                #scrollable
+                [buttons]="true"
+                trackClass="scrollbar-track"
+                thumbClass="scrollbar-thumb"
+                buttonClass="scrollbar-button"
+            >
+                <ul class="bus-stop-list">
+                    @for (cv of showCVStatus.cvStatus; track cv.cvNum) {
+                        <li class="row">
+                            <div class="left">
+                                <p class="cv-name">CV{{ cv.cvNum }}:</p>
+                            </div>
+                            <div class="right">
+                                {{ FareCVStatus[cv.status] }}
+                                {{
+                                    FareCVSubStatus[cv?.subStatus || 0]
+                                        ? ' - ' + FareCVSubStatus[cv?.subStatus || 0]
+                                        : ''
+                                }}
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </ng-scrollbar>
+        </div>
+    </div>
+    <!-- <app-dialog>
+        <div class="show-cv-dialog">
+            <div class="show-cv-dialog-header">
+                <h3 class="show-cv-dialog-title">Show CV Status</h3>
+                <div class="close-btn" (click)="handleClose()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>Close</span>
+                </div>
+            </div>
+            <div class="show-cv-dialog-content">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">CV1:</p>
+                                    <p class="cv-status cv-status-active">In Service</p>
+                                </div>
+                                <div class="right right-active">Auto</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">CV2:</p>
+                                </div>
+                                <div class="right">Not Installed</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">CV3:</p>
+                                </div>
+                                <div class="right">Not Installed</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">CV4:</p>
+                                </div>
+                                <div class="right">Not Installed</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">CV5:</p>
+                                </div>
+                                <div class="right">Not Installed</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">CV6:</p>
+                                </div>
+                                <div class="right">Not Installed</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </app-dialog> -->
+</div>

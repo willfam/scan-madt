@@ -1,0 +1,35 @@
+@if (!auth.isLoggedIn) {
+    <ng-container>
+        <app-header screen="maintenance" [disableButtons]="['log-out-btn']"></app-header>
+        <div class="lta-full-screen">
+            <div class="lta-logo"></div>
+            <h3 class="title">{{ 'YOU_HAVE_BEEN_LOG_OFF' | translate }}</h3>
+            <div class="content">{{ 'PLEASE_LOGIN_FROM_MAIN_TAB' | translate }}</div>
+        </div>
+    </ng-container>
+} @else if (auth.isLoggedIn && auth.loggedInType !== 2) {
+    <ng-container>
+        <app-header screen="maintenance" [disableButtons]="['log-out-btn']"></app-header>
+        <div class="lta-full-screen">
+            <div class="lta-logo"></div>
+            <h3 class="title">{{ 'ACCESS_DENIED' | translate }}</h3>
+        </div>
+    </ng-container>
+} @else {
+    <app-header screen="maintenance"> </app-header>
+    <main>
+        <router-outlet></router-outlet>
+        @if (shuttingDownWarning.show) {
+            <shutting-down-warning
+                [time]="shuttingDownWarning.message || ''"
+                (onConfirm)="handleIgnitionOff()"
+                [disabled]="shuttingDownWarning.disabled"
+            ></shutting-down-warning>
+        }
+        @if (notification.show) {
+            <div class="notification">
+                <notification [message]="notification.message || ''" (onOK)="handleClosePopup()"></notification>
+            </div>
+        }
+    </main>
+}

@@ -1,0 +1,24 @@
+<div class="free-container">
+    <!-- <div class="page-header">
+        <div class="button" (click)="backToMain()">
+            <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+            <span>{{ 'CLOSE' | translate }}</span>
+        </div>
+    </div> -->
+    <div class="confirm">
+        <div class="confirm-header">
+            {{ (freeMode ? 'TOGGLE_OFF_FREE_MODE' : 'TOGGLE_CV_TO_FREE') | translate }}
+        </div>
+        <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+        <div class="cf-btn-group">
+            <div class="btn btn-cancel" (click)="backToMain()">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </div>
+            <div class="btn btn-confirm" (click)="handleFreeRideMode()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'CONFIRM' | translate }}</span>
+            </div>
+        </div>
+    </div>
+</div>

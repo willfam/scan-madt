@@ -1,0 +1,9 @@
+@import 'styles/_variables.scss';
+
+@mixin lta-check-test-printer-theme($light-theme: false) {
+    @if $light-theme {
+        .test-print-page {
+            color: $black;
+        }
+    }
+}

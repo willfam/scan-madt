@@ -1,0 +1,47 @@
+<div class="bls">
+    <div *ngIf="step === 1">
+        <div class="back-button" (click)="goBack()">Back</div>
+        <h2 class="title">{{ 'SECONDARY_BLS_STATUS' | translate }}</h2>
+        <div class="content">
+            <p class="label">
+                {{ 'STATUS' | translate }}:
+                <span class="value">{{
+                    (fareConsoleSetting.blsStatus === 1 ? 'ENABLE' : 'DISABLED') | translate
+                }}</span>
+            </p>
+            <div class="btn-group">
+                <button class="btn" [disabled]="fareConsoleSetting.blsStatus === 2" (click)="handleSelectStatus(2)">
+                    <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
+                    <div class="text">{{ 'DISABLED' | translate }}</div>
+                </button>
+                <button class="btn" [disabled]="fareConsoleSetting.blsStatus === 1" (click)="handleSelectStatus(1)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <div class="text">{{ 'ENABLE' | translate }}</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="step === 2">
+        <h2 class="title">{{ 'CONFIRMATION' | translate }}</h2>
+        <div class="content">
+            <div class="confirm">
+                {{
+                    selectedBlsStatus === 1
+                        ? ('BLS_STATUS_ENABLE' | translate) + '?'
+                        : ('BLS_STATUS_DISABLE' | translate) + '?'
+                }}
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="handleConfirmBlsStatus(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleConfirmBlsStatus(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

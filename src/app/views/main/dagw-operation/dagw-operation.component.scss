@@ -1,0 +1,61 @@
+@import 'styles/_variables.scss';
+
+.dagw-operation {
+    height: calc(100vh - $header-footer-height);
+    padding: 8px 20px;
+
+    .content {
+        width: 100%;
+        margin-top: 5rem;
+
+        h2 {
+            margin-top: 6rem;
+            white-space: pre-wrap;
+        }
+    }
+
+    img {
+        margin-top: 50px;
+    }
+
+    .progress-wrapper {
+        margin-top: 100px;
+    }
+
+    .progress-bar {
+        margin: 0 auto;
+        margin-top: 4rem;
+        width: 300px;
+        background-color: $white;
+
+        .progress {
+            background-color: $color-green;
+            height: 24px;
+        }
+    }
+}
+
+.cancel-btn {
+    margin-top: 2rem;
+    width: 150px;
+    height: 75px;
+    font-size: 18px;
+    padding: 0px;
+
+    .mat-icon {
+        font-size: 2.125rem !important;
+        height: 2.125rem !important;
+        width: 2.125rem !important;
+    }
+}
+
+.message {
+    font-weight: $font-weight-bold;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.n-m-t {
+    margin-top: 0 !important;
+}

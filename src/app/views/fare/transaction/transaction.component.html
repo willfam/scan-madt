@@ -1,0 +1,159 @@
+<ng-container>
+    <app-header screen="ticketing"></app-header>
+    <div class="transaction-page">
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <img src="/assets/images/icons/ticketing/ticket.svg" />
+                <a [routerLink]="['/fare']">Fare</a>
+                <span>></span>
+                <p>Transaction</p>
+            </div>
+            <div class="madt-content">
+                <div class="transaction">
+                    <div class="back-button" (click)="goBack()">Back</div>
+                    <div *ngIf="step === 1">
+                        <h2 class="title">Select CV</h2>
+                        <div class="content">
+                            <div class="btn-group">
+                                <button class="button" (click)="handleSelectCV(1)">
+                                    <div class="text">CV1</div>
+                                </button>
+                                <button class="button" (click)="handleSelectCV(2)">
+                                    <div class="text">CV2</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="step === 2">
+                        <confirm-dialog
+                            [title]="'Proceed to wait for Card Details'"
+                            [content]="'From the CV' + selectedCV + ' Unit Press Enter to Confirm'"
+                            [btnCancel]="true"
+                            [btnConfirm]="true"
+                            (onCancel)="handleConfirmTopUpAmt(false)"
+                            (onConfirm)="handleConfirmTopUpAmt(true)"
+                        >
+                        </confirm-dialog>
+                    </ng-container>
+
+                    <ng-container *ngIf="step === 3">
+                        <h2 class="title">Card Value = $433.92</h2>
+                        <div class="scrollbar">
+                            <ng-scrollbar
+                                #scrollable
+                                [buttons]="true"
+                                trackClass="scrollbar-track"
+                                thumbClass="scrollbar-thumb"
+                                buttonClass="scrollbar-button"
+                            >
+                                <ul>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="left">
+                                            <p class="date">12-08-2024</p>
+                                            <p class="time">11:23</p>
+                                        </div>
+                                        <div class="right">
+                                            <p class="value">$0.00</p>
+                                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ng-scrollbar>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,8 @@
+<div class="wrapper">
+    <div class="content">
+        <img src="/assets/images/svg/madt-logo.svg" />
+        <h2 [ngClass]="{ loading: pageData !== 'COMMISSIONING_COMPLETED_CLEANING' }">
+            {{ pageData | translate }}
+        </h2>
+    </div>
+</div>

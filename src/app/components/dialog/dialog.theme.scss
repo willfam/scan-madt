@@ -1,0 +1,13 @@
+@import 'styles/_variables.scss';
+
+@mixin lta-dialog-theme($light-theme: false) {
+    @if $light-theme {
+        .lta-dialog {
+            background-color: #999999 !important;
+
+            &-main {
+                background-color: #f2f2f2 !important;
+            }
+        }
+    }
+}

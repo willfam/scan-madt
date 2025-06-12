@@ -1,0 +1,200 @@
+<div class="external-devices-page">
+    <div class="external-devices-box">
+        <div class="external-devices-header">
+            <div class="back-button" (click)="backToStartShift()">Back</div>
+            <div class="title">{{ 'EXT_DEVICES_DIAG' | translate }}</div>
+            <div
+                *ngIf="externalDevices.status === ResponseStatus.SUCCESS"
+                class="refresh-button"
+                (click)="handleRefresh()"
+            >
+                <img src="/assets/images/icons/bus-operation/refresh.svg" alt="" />
+            </div>
+        </div>
+        <div class="external-devices-content">
+            <div class="scrollbar">
+                <ng-scrollbar
+                    #scrollable
+                    [buttons]="true"
+                    trackClass="scrollbar-track"
+                    thumbClass="scrollbar-thumb"
+                    buttonClass="scrollbar-button"
+                >
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="label">Test Print:</div>
+                                    @if (externalDevices.testPrinter.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.testPrinter.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.testPrinter['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.testPrinter.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                    <div class="button" (click)="handlePrintTest()">
+                                        <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="label">Printer:</div>
+                                    @if (externalDevices.printer.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.printer.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.printer['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.printer.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="label">Fare:</div>
+                                    @if (externalDevices.fare.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.fare.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.fare['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.fare.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="label">Transmitter:</div>
+                                    @if (externalDevices.transmitter.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.transmitter.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.transmitter['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.transmitter.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="label">CV1:</div>
+                                    @if (externalDevices.cv1.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.cv1.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.cv1['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.cv1.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="label">CV2:</div>
+                                    @if (externalDevices.cv2.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.cv2.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.cv2['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.cv2.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="label">CV3:</div>
+                                    @if (externalDevices.cv3.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.cv3.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.cv3['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.cv3.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="label">CV4:</div>
+                                    @if (externalDevices.cv4.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.cv4.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.cv4['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.cv4.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="label">CV5:</div>
+                                    @if (externalDevices.cv5.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.cv5.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.cv5['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.cv5.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="label">CV6:</div>
+                                    @if (externalDevices.cv6.status === ResponseStatus.PROGRESS) {
+                                        <p class="value loading">{{ 'Testing' | translate }}...</p>
+                                    } @else if (externalDevices.cv6.status === ResponseStatus.ERROR) {
+                                        <div class="value error">
+                                            {{ externalDevices.cv6['message'] || '' | translate }}
+                                        </div>
+                                    } @else if (externalDevices.cv6.status === ResponseStatus.SUCCESS) {
+                                        <div class="value">OK</div>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </ng-scrollbar>
+            </div>
+        </div>
+        <div class="btn-group">
+            <div
+                *ngIf="externalDevices.status === ResponseStatus.PROGRESS"
+                class="btn btn-cancel"
+                (click)="handleConfirm(false)"
+            >
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </div>
+            <div
+                *ngIf="externalDevices.status === ResponseStatus.SUCCESS"
+                class="btn btn-confirm"
+                (click)="handleConfirm(true)"
+            >
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span class="text">{{ 'OK' | translate }}</span>
+            </div>
+        </div>
+    </div>
+</div>

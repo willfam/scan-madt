@@ -1,0 +1,31 @@
+@import 'styles/_variables.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+main {
+    color: white;
+    width: 100%;
+    // height: calc(100vh - $header-footer-height);
+    background-color: $madt-bg-black-1;
+}
+
+.conneting-warpper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+}

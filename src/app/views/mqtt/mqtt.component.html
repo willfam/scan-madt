@@ -1,0 +1,518 @@
+<div class="wrapper">
+    <div>
+        <h1>Mqtt Test Page</h1>
+        @if (isLoading) {
+            <div>Loading .....</div>
+        }
+
+        @if (!isLoading && isConnected) {
+            <div class="action-cont">
+                <div class="cv-icon-cont">
+                    <h2>CV Passenger Tap card</h2>
+                    <mat-slide-toggle [(ngModel)]="isError">Signal Type</mat-slide-toggle>
+                    <p>Switch is: {{ isError ? 'Error' : 'Success' }}</p>
+                    <mat-form-field>
+                        <mat-label>Error Message</mat-label>
+                        <mat-select [(ngModel)]="cvErrorMsg">
+                            <mat-option
+                                *ngFor="let message of ['ACCOUNT_NOT_SUPPORTED', 'MULTIPLE_CARDS', 'LOW_VALUE']"
+                                [value]="message"
+                            >
+                                {{ message }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Cv url / number</mat-label>
+                        <mat-select (selectionChange)="onCvNumberChange($event.value)" [(ngModel)]="cvUrl">
+                            <mat-option *ngFor="let cvData of [1, 2, 3, 4, 5, 6]" [value]="cvData">
+                                {{ cvData }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Icon type</mat-label>
+                        <mat-select (selectionChange)="onIconTypeChange($event.value)" [(ngModel)]="activeIcon">
+                            <mat-option *ngFor="let iconName of iconNames" [value]="iconName.value">
+                                <img alt="{{ iconName.value }}" width="26" height="26" [src]="iconName.url" />
+                                {{ iconName.value }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!cvUrl || !activeIcon" mat-raised-button (click)="sendIcon()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h2>CV Status changer</h2>
+
+                    <section class="cv-number-cont">
+                        <mat-checkbox
+                            *ngFor="let cvData of [1, 2, 3, 4, 5, 6]"
+                            [checked]="cvStatusChanger?.includes(cvData)"
+                            (change)="onCheckboxChange($event, cvData)"
+                            >CV Number {{ cvData }}</mat-checkbox
+                        >
+                    </section>
+
+                    <mat-form-field>
+                        <mat-label>Status</mat-label>
+                        <mat-select multiple [(ngModel)]="activeCvDir">
+                            <mat-option *ngFor="let iconName of cvDirOptions" [value]="iconName.value">
+                                {{ iconName.key }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button
+                        [disabled]="!activeCvDir || cvStatusChanger.length === 0"
+                        mat-raised-button
+                        (click)="sendCvStatus()"
+                        color="primary"
+                    >
+                        Send
+                    </button>
+                </div>
+
+                <div class="">
+                    <h6>Publish bus DIR(Now, Next, Dest)</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Bus route now</mat-label>
+                        <mat-select
+                            [compareWith]="compareObjects"
+                            (selectionChange)="onRouteChange($event.value, 'now')"
+                            [(value)]="currentRoute.now"
+                        >
+                            <mat-option *ngFor="let busRoute of busRouteList" [value]="busRoute?.Busid">
+                                {{ busRoute.Name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Bus route dest</mat-label>
+                        <mat-select
+                            [compareWith]="compareObjects"
+                            (selectionChange)="onRouteChange($event.value, 'dest')"
+                            [(value)]="currentRoute.dest"
+                        >
+                            <mat-option *ngFor="let busRoute of busRouteList" [value]="busRoute?.Busid">
+                                {{ busRoute.Name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendDirRoute()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div class="">
+                    <h6>Publish Current Fare Bus stop</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Fare Bus Stop</mat-label>
+                        <mat-select
+                            [compareWith]="compareObjects"
+                            (selectionChange)="onRouteChange($event.value, 'fareBusStop')"
+                            [(value)]="currentRoute.fareBusStop"
+                        >
+                            <mat-option *ngFor="let busRoute of busRouteList" [value]="busRoute?.Busid">
+                                {{ busRoute.Name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Index</mat-label>
+                        <input matInput placeholder="Change Index" [(ngModel)]="fareBusStopIndex" />
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="manualBls">Manual BLS</mat-slide-toggle>
+                    <mat-slide-toggle [(ngModel)]="misMatch">Mis Match</mat-slide-toggle>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendCurrentFareBusStop()" color="primary">Send</button>
+                </div>
+
+                <div class="">
+                    <h6>Change FMS Bus stop</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Bus Service Number</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.busServiceNum" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Plate Number</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.plateNum" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>SPID</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.spid" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Dir</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.dir" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>KM</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.km" />
+                    </mat-form-field>
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="fmsBusStop.updateBusStopList"
+                        >Change FMS Bus Stop List</mat-slide-toggle
+                    >
+                    <br />
+                    <button mat-raised-button (click)="sendUpdateFmsBusStop()" color="primary">Send</button>
+                </div>
+
+                <div class="">
+                    <h6>Head way and Timetable</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Current Block</mat-label>
+                        <input matInput placeholder="Name" [(ngModel)]="headTimeTTable.currentBlock" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Bar count</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="headTimeTTable.bars">
+                            <mat-option *ngFor="let barCount of [0, 1, 2, 3, 4, 5, 6]" [value]="barCount">
+                                {{ barCount }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-slide-toggle [(ngModel)]="headTimeTTable.isHeadway">Is headway</mat-slide-toggle>
+                    <br />
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Min Sec 00:00</mat-label>
+                        <input matInput placeholder="Name" [(ngModel)]="headTimeTTable.minSec" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Color</mat-label>
+                        <mat-select [(ngModel)]="headTimeTTable.color">
+                            <mat-option *ngFor="let color of ['green', 'blue', 'orange', 'black']" [value]="color">
+                                {{ color }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Color</mat-label>
+                        <mat-select [(ngModel)]="headTimeTTable.direction">
+                            <mat-option *ngFor="let dir of ['left', 'right']" [value]="dir">
+                                {{ dir }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendHeadTime()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div class="">
+                    <h6>Next Bus Info</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Bus Behind occupancy</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="nextBusInfo.busBehindOccupancy">
+                            <mat-option *ngFor="let barCount of [0, 1, 2, 3]" [value]="barCount">
+                                {{ barCount }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Seconds</mat-label>
+                        <input matInput type="'number" placeholder="Name" [(ngModel)]="nextBusInfo.busBehindTime" />
+                    </mat-form-field>
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="nextBusInfo.show">Show next Bus info</mat-slide-toggle>
+                    <br />
+                    <br />
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendNextBusInfo()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div class="">
+                    <h6>Publish DAGW busOperation</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Message Title</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.title">
+                            <mat-option *ngFor="let popMsgtitle of dagwOperation.popMsgtitle" [value]="popMsgtitle">
+                                {{ popMsgtitle }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Message Text</mat-label>
+                        <input
+                            matInput
+                            type="'text"
+                            placeholder="Message Text"
+                            [(ngModel)]="dagwOperationPublish.message"
+                        />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>File Name</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.fileName">
+                            <mat-option *ngFor="let fileName of dagwOperation.fileNames" [value]="fileName">
+                                {{ fileName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Percentage</mat-label>
+                        <input
+                            matInput
+                            type="'number"
+                            placeholder="Percentage"
+                            [(ngModel)]="dagwOperationPublish.percentage"
+                        />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Status</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.status">
+                            <mat-option *ngFor="let status of ['', 1, 2]" [value]="status">
+                                {{ status }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- <mat-form-field>
+                        <mat-label>Tick Button</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.tickButton">
+                            <mat-option *ngFor="let tickButton of dagwOperation.tickButton" [value]="tickButton">
+                                {{ tickButton }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <button
+                        [disabled]="!dagwOperationPublish.message"
+                        mat-raised-button
+                        (click)="sendDagwOperation()"
+                        color="primary"
+                    >
+                        Send
+                    </button>
+                </div>
+
+                <div class="">
+                    <h6>Redirection using Latest message format</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Redirection</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            <ng-container *ngFor="let barCount of authList">
+                                <mat-option *ngIf="barCount?.isLatest" [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendRedirect()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div class="">
+                    <h6>Redirection for Maintenance Tab</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Redirection</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            <ng-container *ngFor="let barCount of maintenanceList">
+                                <mat-option *ngIf="barCount?.isLatest" [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                    <button
+                        [disabled]="!currentRoute"
+                        mat-raised-button
+                        (click)="sendMaintenanceRedirect()"
+                        color="primary"
+                    >
+                        Send
+                    </button>
+                </div>
+
+                <div class="">
+                    <h6>Redirection for Fare Tab</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Redirection</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            <ng-container *ngFor="let barCount of fareList">
+                                <mat-option *ngIf="barCount?.isLatest" [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendFareRedirect()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div>
+                    <h6>BOLC, FARE, FMS and CRP Status Change</h6>
+                    <br />
+                    <br />
+                    <br />
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusBTS"
+                        (change)="
+                            handleToggleStatus(
+                                'statusBTS',
+                                MsgID.CHANGE_BTS_STATUS,
+                                connectionStatus.connection.statusBTS
+                            )
+                        "
+                        >BTS</mat-slide-toggle
+                    >
+                    <p>
+                        BTS is:
+                        <span [style.color]="connectionStatus.connection.statusBTS ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusBTS ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                    <br />
+                    <br />
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusBOLC"
+                        (change)="
+                            handleToggleStatus(
+                                'statusBOLC',
+                                MsgID.CHANGE_BOLC_STATUS,
+                                connectionStatus.connection.statusBOLC
+                            )
+                        "
+                        >BOLC</mat-slide-toggle
+                    >
+                    <p>
+                        BOLC is:
+                        <span [style.color]="connectionStatus.connection.statusBOLC ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusBOLC ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                    <br />
+                    <br />
+                    <!-- <mat-slide-toggle [(ngModel)]="connectionStatus.connection.statusFARE">FARE</mat-slide-toggle>
+                    <p>
+                        FARE is:<span [style.color]="connectionStatus.connection.statusFARE ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusFARE ? 'Connected' : 'Disconnected' }}
+                        </span>
+                    </p>
+                    <br />
+                    <br /> -->
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusFMS"
+                        (change)="
+                            handleToggleStatus(
+                                'statusFMS',
+                                MsgID.CHANGE_FMS_STATUS,
+                                connectionStatus.connection.statusFMS
+                            )
+                        "
+                        >FMS</mat-slide-toggle
+                    >
+                    <p>
+                        FMS is:<span [style.color]="connectionStatus.connection.statusFMS ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusFMS ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                    <br />
+                    <br />
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusCRP"
+                        (change)="
+                            handleToggleStatus(
+                                'statusCRP',
+                                MsgID.CHANGE_CRP_STATUS,
+                                connectionStatus.connection.statusCRP
+                            )
+                        "
+                        >CRP</mat-slide-toggle
+                    >
+                    <p>
+                        CRP is:
+                        <span [style.color]="connectionStatus.connection.statusCRP ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusCRP ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                    <!-- <br />
+                    <br />
+                    <button
+                        [disabled]="!currentRoute"
+                        mat-raised-button
+                        (click)="updateConnectionStatus()"
+                        color="primary"
+                    >
+                        Update Connection Status
+                    </button>
+                    <br />
+                    <br />
+                    <button
+                        [disabled]="!currentRoute"
+                        mat-raised-button
+                        (click)="updateConnectionStatusByLastMessageFormat()"
+                        color="primary"
+                    >
+                        Update Connection Status By Last Message Format
+                    </button>
+                    <br />
+                    <br />
+                    <button
+                        [disabled]="!currentRoute"
+                        mat-raised-button
+                        (click)="updateConnectionStatus(true)"
+                        color="secondary"
+                    >
+                        Reset Connection Status
+                    </button> -->
+                </div>
+                <div class="cv-icon-cont">
+                    <h2>Changes Start Trip flow</h2>
+
+                    <mat-form-field>
+                        <mat-label>Choose flow</mat-label>
+                        <mat-select
+                            (selectionChange)="onIconTypeChange($event.value)"
+                            [(ngModel)]="currentStartTripFlow"
+                        >
+                            <mat-option *ngFor="let iconName of startTripList" [value]="iconName">
+                                {{ replaceUnderscore(iconName) }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="startTripNotification">Notification</mat-slide-toggle>
+                    <br />
+                    <button mat-raised-button (click)="sendStartTripFlow()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h2>Main page pop up message</h2>
+
+                    <mat-form-field>
+                        <mat-label>Choose pop up</mat-label>
+                        <mat-select (selectionChange)="onIconTypeChange($event.value)" [(ngModel)]="currentMainPagePop">
+                            <mat-option *ngFor="let iconName of mainPagePopUpList" [value]="iconName">
+                                {{ replaceUnderscore(iconName) }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <button mat-raised-button (click)="sendMainPagePop()" color="primary">Send</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

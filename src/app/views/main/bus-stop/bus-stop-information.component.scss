@@ -1,0 +1,564 @@
+@import 'styles/_variables.scss';
+
+$font-size-variable: 16px;
+$font-size-medium: 18px;
+$font-size-label: 20px;
+$font-size-large: 24px;
+
+.bus-stop-page {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    height: 100%;
+    position: relative;
+    // z-index: 100;
+
+    .info {
+        display: flex;
+        align-items: center;
+        height: 280px;
+        padding: 16px;
+        background-color: $madt-bg-dark-2;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        justify-content: flex-end;
+
+        .detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .information {
+                display: grid;
+                // padding: 20px 10px 20px 0;
+                gap: 10px;
+
+                .info-items {
+                    .title {
+                        font-size: $font-size-medium;
+                        font-weight: $font-weight-light;
+                    }
+
+                    .number {
+                        font-size: 64px;
+                        // color: #fed000;
+                        font-weight: $font-weight-extra-bold;
+                        text-transform: uppercase;
+                    }
+                }
+
+                .info-route {
+                    display: grid;
+                    gap: 16px;
+
+                    .plate-number {
+                        font-size: $font-size-label;
+                        font-weight: $font-weight-light;
+                        text-transform: uppercase;
+                    }
+
+                    span.number {
+                        font-size: 28px;
+                        font-weight: bold;
+                    }
+
+                    .route {
+                        display: flex;
+                        gap: 30px;
+
+                        .label-data {
+                            font-weight: $font-weight-light;
+                            font-size: $font-size-label;
+
+                            .data {
+                                font-weight: $font-weight-semi-bold;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .headway {
+            flex-basis: 285px;
+            display: flex;
+            flex-direction: column;
+            background-color: #0e2932;
+            transition: background-color 0.3s ease;
+
+            .bar-cont-wrapper {
+                border: 4px solid white;
+                display: flex;
+
+                gap: 1.5px;
+                padding: 4px;
+                background-color: black;
+
+                > div {
+                    transition: background-color 0.3s ease;
+                    box-sizing: border-box;
+                }
+            }
+
+            .headway-cont {
+                transition: 0.3s ease;
+                display: grid;
+                justify-items: center;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+                gap: 0px 0px;
+                grid-template-areas:
+                    'a'
+                    'b'
+                    'c';
+                padding: 12px;
+                min-height: 180;
+                border-radius: 4px;
+
+                .bar-cont {
+                    width: 140px;
+                    height: 40px;
+
+                    > div {
+                        width: 9.91px;
+                        height: 24px;
+                    }
+                }
+            }
+
+            .time-table-cont {
+                display: grid;
+                transition: 0.3s ease-in-out all;
+                grid-template-columns: 1fr 2fr 2fr;
+                grid-template-areas:
+                    'b a a'
+                    'b c c';
+                padding: 20px 30px;
+                min-height: 180;
+                border-radius: 4px;
+                gap: 0;
+
+                .bar-cont {
+                    height: 140px;
+                    width: 40px;
+                    flex-direction: column;
+
+                    > div {
+                        height: 9.91px;
+                        width: 24px;
+                    }
+                }
+            }
+
+            .a {
+                grid-area: a;
+                text-align: center;
+                transition: 0.3s ease;
+            }
+
+            .b {
+                grid-area: b;
+                transition: 0.3s ease;
+            }
+
+            .c {
+                grid-area: c;
+                transition: 0.3s ease;
+                text-align: center;
+            }
+
+            .label-headway {
+                font-size: $font-size-large;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .time {
+                font-size: 40px;
+                font-weight: $font-weight-bold;
+            }
+        }
+    }
+
+    hr {
+        border: 1px solid #051c27;
+    }
+
+    .group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: 100%;
+        // max-height: 391px;
+        padding: 0 16px 16px 16px;
+        overflow-y: overlay;
+        background-color: $madt-bg-dark-2;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        // margin-top: 2px;
+        // border: 1px solid green;
+
+        .bus-stop-list {
+            flex-grow: 1;
+            height: calc(100% - 180px);
+            position: relative;
+        }
+
+        .back-to-top {
+            position: absolute;
+            display: block;
+            right: -10px;
+            bottom: -64px;
+            z-index: 2;
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+        }
+    }
+
+    .indicator {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        flex-shrink: 0;
+        padding: 14px 16px;
+        background-color: $madt-bg-charcoal-2;
+
+        .loading {
+            min-height: 45px;
+        }
+
+        &.now {
+            background-color: $black;
+        }
+
+        &.active {
+            background-color: #046a7b !important;
+        }
+
+        &.selected {
+            background-color: #006170 !important;
+        }
+
+        &.bus-stop,
+        &.destination {
+            background-color: $madt-color-cement;
+            padding-right: 20px;
+            height: 80px;
+            margin-right: 24px;
+
+            .left {
+                text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .matd-indicatior {
+                .name,
+                .time {
+                    font-size: 28px;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+
+        &.destination {
+            background-color: $madt-bg-dark-2;
+        }
+
+        &.mis-match {
+            border: 2px dashed $white;
+            background-color: #88750a;
+        }
+
+        .left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-align: center;
+            font-size: $font-size-variable;
+            padding: 8px 15px 0;
+            font-weight: $font-weight-bold;
+            background-color: transparent !important;
+
+            &.fare {
+                background-color: #fed000 !important;
+            }
+        }
+
+        .right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: $font-size-variable;
+            padding: 8px 15px 0;
+            font-weight: $font-weight-bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .km {
+                font-size: 20px;
+            }
+
+            .manual {
+                color: $black;
+                padding: 3px 10px;
+                background: $color-yellow-1;
+                border-radius: 25px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+        }
+
+        .watching {
+            margin-right: 25px;
+        }
+
+        .matd-indicatior {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 12px;
+
+            .name,
+            .time {
+                font-size: 28px;
+            }
+        }
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .button {
+            @include flex-center;
+            justify-content: flex-end;
+        }
+
+        &.full-row {
+            justify-content: flex-end;
+        }
+
+        h2 {
+            font-weight: $font-weight-bold;
+        }
+
+        span {
+            padding-left: 5px;
+            font-size: 28px;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    ng-scrollbar {
+        @include scrollbar;
+    }
+
+    ::ng-deep {
+        .scrollbar-track {
+            @include scrollbar-track;
+        }
+
+        .scrollbar-thumb {
+            @include scrollbar-thumb;
+        }
+
+        .scrollbar-button {
+            @include scrollbar-button;
+        }
+    }
+
+    .bus-stop-fare-page {
+        background-color: $madt-bg-dark-1;
+        padding: 16px 0 16px 16px;
+        height: 100%;
+        border-radius: 4px;
+        position: relative;
+        z-index: 100;
+
+        .page-header {
+            padding-right: 16px;
+        }
+    }
+
+    .bus-stop-fare {
+        margin-top: 20px;
+        height: 100%;
+
+        &-header {
+            @include flex-center;
+            gap: 10px;
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+        }
+
+        &-item {
+            margin-top: 12px;
+
+            &:first-child {
+                margin-top: 24px;
+            }
+
+            &.active {
+                background-color: $madt-bg-light-1 !important;
+            }
+
+            .left {
+                font-size: 24px;
+            }
+
+            .matd-indicatior {
+                padding-top: 24px;
+
+                .name,
+                .time {
+                    font-size: 28px;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+
+        .scrollbar {
+            height: calc(100% - 85px);
+        }
+    }
+
+    .confirm-bus-stop-fare-container {
+        background-color: $madt-bg-dark-1;
+        padding: 16px;
+        height: 100%;
+        width: 100%;
+        border-radius: 4px;
+        z-index: 101;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        .confirm {
+            margin-top: 100px;
+            @include flex-center;
+            flex-direction: column;
+            text-align: center;
+
+            .confirm-header {
+                @include flex-center;
+                gap: 10px;
+                font-size: 32px;
+                font-weight: $font-weight-semi-bold;
+            }
+
+            .dialog-title {
+                display: flex;
+                font-size: 32px;
+                font-weight: $font-weight-semi-bold;
+                min-width: 400px;
+                margin-bottom: 12px;
+
+                .title {
+                    width: 70%;
+                }
+            }
+
+            .confirm-msg {
+                margin-top: 10px;
+                font-size: 28px;
+                max-width: 400px;
+            }
+
+            .content {
+                font-size: 24px;
+                margin-top: 20px;
+                width: 400px;
+                text-align: center;
+            }
+
+            .cf-btn-group {
+                @include flex-center;
+                gap: 10px;
+                margin-top: 20px;
+
+                .btn {
+                    @include flex-center;
+                    min-height: 80px;
+                    min-width: 160px;
+                    border-radius: 5px;
+                    transition: 0.2s ease-in-out 0s;
+
+                    &:active {
+                        transform: scale(1.01);
+                    }
+
+                    span {
+                        font-size: 22px;
+                        font-weight: $font-weight-bold;
+                        padding-left: 6px;
+                        color: $white;
+                    }
+
+                    &-cancel {
+                        background-color: $madt-color-red;
+                    }
+
+                    &-confirm {
+                        background-color: $madt-bg-light-1;
+                    }
+                }
+            }
+        }
+    }
+
+    .next-bus-info-wrapper {
+        align-self: baseline;
+    }
+
+    .next-bus-info {
+        min-width: 175px;
+        height: 105px;
+        box-sizing: border-box;
+        background-color: #000d10;
+        padding: 15px 10px;
+        margin: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        > h1 {
+            font-weight: bold;
+        }
+    }
+}
+
+.fms-not-connected {
+    justify-content: end !important;
+}
+
+.fms-waiting-cont {
+    flex-grow: 1;
+    margin-right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    .spacer {
+        margin-top: 1rem;
+    }
+}
+
+.rotating {
+    animation: rotate 2s linear infinite;
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}

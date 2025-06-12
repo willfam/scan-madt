@@ -1,0 +1,79 @@
+<div class="calibrate-bls-manual-input-page">
+    <div *ngIf="step === 1">
+        <div class="back-button" (click)="goBack()">{{ 'BACK' | translate }}</div>
+        <h2 class="title">{{ 'MANUAL_INPUT' | translate }}</h2>
+        <div class="content mt-50">
+            <div class="flex">
+                <div>{{ 'ACTIVE_CALIB_FACTOR' | translate }}</div>
+                <div>330</div>
+            </div>
+            <div class="flex">
+                <div>{{ 'PARAMETER_CALIB_FACTOR' | translate }}</div>
+                <div>350</div>
+            </div>
+            <div class="input-group">
+                <p>{{ 'NEW_BLS_CALIB_FACTOR' | translate }}</p>
+                <input id="inputField" />
+            </div>
+        </div>
+        <div class="keyboard">
+            <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+        </div>
+    </div>
+
+    <div *ngIf="step === 2" class="confirmation">
+        <h2 class="title">{{ 'CONFIRMATION' | translate }}</h2>
+        <div class="content">
+            <div class="confirm">New Calibration Factor {{ inputValue }}?</div>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="handleConfirm(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleConfirm(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <confirm-dialog
+        *ngIf="step === 2"
+        title="Confirmation"
+        content="New Calibration Factor {{ inputValue }}?"
+        [btnCancel]="true"
+        [btnConfirm]="true"
+        (onCancel)="handleConfirm(false)"
+        (onConfirm)="handleConfirm(true)"
+    >
+    </confirm-dialog> -->
+
+    <confirm-dialog
+        *ngIf="step === 3"
+        [title]="success ? ('SUCCESS' | translate) : ('ERROR' | translate)"
+        [content]="'NEW_CALIBRATION_FACTOR_SET' | translate"
+        [btnOK]="true"
+        (onOK)="handleFinish()"
+    >
+        @if (success) {
+            <div style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+            </div>
+        } @else {
+            <div style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+            </div>
+        }
+        <!-- @if (success) {
+            <h3 class="dialog-title" title>
+                New Calibration Factor <br />
+                has been Set.
+            </h3>
+        } @else {
+            <div style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+            </div>
+        } -->
+    </confirm-dialog>
+</div>

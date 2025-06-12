@@ -1,0 +1,81 @@
+<div class="wrapper">
+    <div class="lang-cont">
+        <button (click)="handleChangeLanguage('EN')" mat-button [ngClass]="{ active: currentLanguage === 'EN' }">
+            English
+        </button>
+        |
+        <button (click)="handleChangeLanguage('CH')" mat-button [ngClass]="{ active: currentLanguage === 'CH' }">
+            华语
+        </button>
+    </div>
+    <div class="text-center content">
+        <h1 class="text-bold">{{ 'TAP_ON_THE_CARD' | translate }}</h1>
+        @if (outOfServiceData.cvUpgradeStatus !== ResponseStatus.PROGRESS) {
+            <h2>
+                {{ outOfServiceData.title || ('OUT_OF_SERVICE' | translate) }}
+                @if (outOfServiceData.action) {
+                    <br />
+                    {{ outOfServiceData.action }}
+                }
+                @if (outOfServiceData.message) {
+                    <br />
+                    {{ outOfServiceData.message }}
+                }
+                @if (outOfServiceData.reason) {
+                    <br />
+                    {{ outOfServiceData.reason }}
+                }
+            </h2>
+            <img src="/assets/images/svg/sign-in-img.svg" />
+            @if (outOfServiceData.upgradeStatus) {
+                <br />
+                <h3>
+                    {{ outOfServiceData.upgradeStatus }}
+                </h3>
+            }
+            <button class="btn btn-confirm bt" (click)="showKeyboardHandler()">
+                <img src="/assets/images/svg/keyboard-icon.svg" />
+            </button>
+        } @else {
+            <h2>
+                {{ 'OUT_OF_SERVICE' | translate }}
+                <br />
+                {{ 'PENDING_UPGRADE_CV' | translate }}
+            </h2>
+            <div class="cv-upgrade">
+                <img src="/assets/images/svg/cv.svg" />
+                <img class="ban" src="/assets/images/svg/ban.svg" />
+            </div>
+        }
+    </div>
+    <!-- <button class="btn" (click)="sendAuth()">On Trip</button> -->
+    <div
+        [ngClass]="{
+            'keyboard-wrapper': true,
+            'service-input': true,
+            'show-keyboard': showKeyboard
+        }"
+    >
+        <div class="keyboard-block">
+            <div class="button" (click)="showKeyboardHandler()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+            <div class="content">
+                <div>
+                    <div class="additional-service">
+                        <h3>{{ 'PLEASE_ENTER_DIGIT' | translate }}</h3>
+                    </div>
+                    <div class="input-group">
+                        <input id="inputField" />
+                        <p class="text-error" *ngIf="commissionError">{{ commissionError | translate }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboard">
+                <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+            </div>
+        </div>
+    </div>
+</div>
+:

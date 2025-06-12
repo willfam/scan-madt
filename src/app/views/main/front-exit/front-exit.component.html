@@ -1,0 +1,41 @@
+<div class="front-exit-container">
+    <ng-container *ngIf="exitMode === ''; else selectedExitMode">
+        <div class="page-header">
+            <h2>{{ 'FRONT_DOOR_EXIT' | translate }}</h2>
+            <div class="button" (click)="backToMain()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div>
+        <div class="button-group">
+            <div class="cv-button" (click)="setExitMode('CV1')">{{ 'CV_COUNT' | translate: { count: 1 } }}</div>
+            <div class="cv-button" (click)="setExitMode('CV2')">{{ 'CV_COUNT' | translate: { count: 2 } }}</div>
+        </div>
+    </ng-container>
+
+    <ng-template #selectedExitMode>
+        <div class="page-header">
+            <div class="button" (click)="backToMain()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div>
+        <div class="dialog">
+            <div class="dialog-header">
+                <span>{{ exitMode }}:</span>
+                <span>{{ ' FRONT_EXIT' | translate }}</span>
+            </div>
+            <p class="confirm-msg">{{ 'PRESS_ENTER_CONFIRM' | translate }}/p></p>
+            <div class="cf-btn-group">
+                <div class="btn btn-cancel" (click)="goBack()">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleUpdateCV(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

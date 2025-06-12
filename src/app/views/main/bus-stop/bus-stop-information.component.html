@@ -1,0 +1,249 @@
+<div class="bus-stop-page">
+    <ng-container *ngIf="!displayBusStopFare && !displayCfmBusStopFare">
+        <div class="info">
+            @if (currentUserIfo?.busServiceNum) {
+                <div class="detail">
+                    <div class="information">
+                        <div class="info-items">
+                            <div class="number">{{ currentUserIfo?.busServiceNum }}</div>
+                        </div>
+                        <div class="info-route">
+                            <div class="plate-number">
+                                {{ 'PLATE_NUMBER' | translate }}:
+                                <span class="number">{{ currentUserIfo?.plateNum }}</span>
+                            </div>
+                            <div class="route">
+                                <!-- <div class="label-data">
+                                    SPID: <span class="data">{{ currentUserIfo?.spid }}</span>
+                                </div> -->
+                                <div class="label-data">
+                                    {{ 'DIR' | translate }}: <span class="data">{{ currentUserIfo?.dir }}</span>
+                                </div>
+                                <!-- <div class="label-data">
+                                    KM: <span class="data">{{ currentUserIfo?.km }}</span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="next-bus-info-wrapper" *ngIf="nextBusInfo$ | async as nbi">
+                    @if (nbi?.show) {
+                        <div class="next-bus-info">
+                            @if ([1, 2, 3].includes(nbi.busBehindOccupancy)) {
+                                <img
+                                    src="/assets/images/icons/main/{{ nbi.busBehindOccupancy }}.svg"
+                                    alt="Bus Occupancy"
+                                />
+                            } @else {
+                                <img src="/assets/images/icons/main/load-unknown-icon.svg" alt="Bus Occupancy" />
+                            }
+                            <img src="/assets/images/icons/main/arrow-left-icon.svg" />
+                            <h1>{{ convertSecondsToMinutes(nbi?.busBehindTime || 0) }}’</h1>
+                        </div>
+                    }
+                </div>
+            }
+            <div
+                class="headway"
+                *ngIf="deviation"
+                [ngStyle]="{
+                    'background-color': deviation.color
+                }"
+            >
+                <div
+                    [ngClass]="{
+                        'headway-cont': deviation.isHeadway,
+                        'time-table-cont': !deviation.isHeadway
+                    }"
+                >
+                    <div class="label-headway a">{{ deviation.currentBlock }}</div>
+                    <div class="icon b">
+                        <div class="bar-cont-wrapper bar-cont">
+                            @for (item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; track item; let idx = $index) {
+                                <div [ngStyle]="{ 'background-color': barCounts.includes(item) ? 'white' : '' }"></div>
+                            }
+                        </div>
+                    </div>
+                    <div class="time c">{{ deviation.minSec }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="group">
+            <div class="bus-stop-list">
+                <ng-scrollbar
+                    #scrollable
+                    [buttons]="true"
+                    trackClass="scrollbar-track"
+                    thumbClass="scrollbar-thumb"
+                    buttonClass="scrollbar-button"
+                >
+                    <div *ngIf="allBusStopList.length === 0; else itemList">
+                        @for (item of [0, 1, 3]; track item; let idx = $index) {
+                            <div class="indicator">
+                                <div class="matd-indicatior loading"></div>
+                            </div>
+                        }
+                    </div>
+
+                    <ng-template #itemList>
+                        @for (item of allBusStopList; track item; let idx = $index) {
+                            <ng-container *ngIf="busStopList$">
+                                <div
+                                    id="{{ item.Busid }}"
+                                    [class]="{
+                                        indicator: true,
+                                        now: currentNowNext[0] === item?.Busid
+                                    }"
+                                    #indicatorDiv
+                                >
+                                    <!-- <div *ngIf="currentNowNext.includes(item.Busid)" class="left">
+                                        {{
+                                            currentNowNext[0] === item?.Busid
+                                                ? 'NOW'
+                                                : currentNowNext[1] === item?.Busid
+                                                  ? 'NEXT'
+                                                  : ''
+                                        }}
+                                    </div> -->
+
+                                    <div class="matd-indicatior">
+                                        <div
+                                            class="name"
+                                            [ngStyle]="{
+                                                'font-weight': currentNowNext[0] !== item?.Busid ? 'normal' : 'bold'
+                                            }"
+                                        >
+                                            {{ item.Name }}
+                                        </div>
+                                        <div
+                                            class="time"
+                                            [ngStyle]="{
+                                                'font-weight': idx > 0 ? 'normal' : 'bold',
+                                                'font-size': idx > 0 ? '24px' : '28px'
+                                            }"
+                                        >
+                                            <img
+                                                *ngIf="item?.aitp"
+                                                src="/assets/images/icons/main/watch.svg"
+                                                alt=""
+                                                class="watching"
+                                            />
+                                            {{ item.time }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        }
+                    </ng-template>
+                </ng-scrollbar>
+                <img
+                    *ngIf="allBusStopList.length > 3"
+                    src="/assets/images/icons/main/madt-icon-home.svg"
+                    class="back-to-top"
+                    alt=""
+                    (click)="scrollable.scrollTo({ top: 0, duration: 300 })"
+                />
+            </div>
+            <div class="indicator destination">
+                @if (destination?.Name) {
+                    <div class="left">{{ 'DESTINATION' | translate }}</div>
+                    <div class="matd-indicatior">
+                        <div class="name">
+                            {{ destination?.Name }}
+                        </div>
+                        <div class="time">
+                            {{ destination?.time }}
+                        </div>
+                    </div>
+                }
+            </div>
+            <div
+                class="indicator bus-stop"
+                (click)="handleDisplayBusStopFare()"
+                [ngClass]="{ 'mis-match': fareBusStop?.misMatch }"
+            >
+                <div class="left">
+                    <img src="/assets/images/icons/main/fare-bus-stop.svg" alt="" />
+                    <div>{{ 'FARE_BUS_STOP' | translate }}</div>
+                </div>
+
+                <div class="matd-indicatior">
+                    <div class="name">{{ fareBusStop?.Busid }} - {{ fareBusStop?.Name }}</div>
+                    <!-- <div class="time">KM {{ fareBusStop?.km }}</div> -->
+                </div>
+                <div class="right">
+                    <div *ngIf="fareBusStop?.manualBls" class="manual">
+                        <img src="/assets/images/icons/main/madt-icondefault-alert.svg" alt="" />
+                        {{ 'MANUAL' | translate }}
+                    </div>
+                    <div class="km">KM {{ formatKm(fareBusStop?.km || '') }}</div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="bus-stop-fare-page" *ngIf="displayBusStopFare">
+        <div class="page-header full-row">
+            <div class="button" (click)="handleCloseBusStopFare()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>Close</span>
+            </div>
+        </div>
+        <div class="bus-stop-fare">
+            <div class="bus-stop-fare-header">Select Fare Bus Stop</div>
+            <div class="scrollbar">
+                <ng-scrollbar
+                    #scrollable
+                    [buttons]="true"
+                    trackClass="scrollbar-track"
+                    thumbClass="scrollbar-thumb"
+                    buttonClass="scrollbar-button"
+                >
+                    @for (item of fareBusStopList$ | async; track item; let idx = $index) {
+                        <div
+                            class="indicator bus-stop-fare-item"
+                            [ngClass]="{
+                                active: fareBusStop?.Busid === item?.Busid,
+                                selected: item?.Busid === selectFareBusStop
+                            }"
+                            (click)="handleChangeBusStopFare(item, idx)"
+                            appButtonSound
+                        >
+                            <div class="left">{{ item.Busid }}</div>
+                            <div class="matd-indicatior">
+                                <div class="name">
+                                    {{ item.Name }}
+                                </div>
+                                <div class="time">KM {{ formatKm(item?.km || '') }}</div>
+                            </div>
+                        </div>
+                    }
+                </ng-scrollbar>
+            </div>
+        </div>
+    </div>
+
+    <div class="confirm-bus-stop-fare-container" *ngIf="displayCfmBusStopFare">
+        <!-- <div class="page-header full-row">
+            <div class="button" (click)="handleCloseBusStopFare()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div> -->
+        <div class="confirm">
+            <div class="confirm-header" [innerHTML]="'CHANGE_BUS_STOP_FARE' | translate"></div>
+            <p class="confirm-msg">{{ 'PRESS_ENTER_CONFIRM' | translate }}</p>
+            <div class="cf-btn-group">
+                <div class="btn btn-cancel" (click)="handleCloseBusStopFare()">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleConfirmBusStopFare(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

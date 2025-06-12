@@ -1,0 +1,66 @@
+<div class="wrapper">
+    <div class="page-header">
+        <div class="back-button" (click)="backToBusOperation()">{{ 'BACK' | translate }}</div>
+    </div>
+    <div [ngClass]="{ content: true }">
+        <h2 class="text-bold">
+            {{ 'PENDING_FOR_FMS_INFO' | translate }}
+
+            <!-- @if (startTripData.type === tripTypeDetails.FMS_NO_INFO) {
+                {{ 'PENDING_FOR_FMS_INFO' | translate }}
+            } -->
+            <!-- @if (startTripData.type === tripTypeDetails.FMS_TRIP_INFO_MISMATCH) {
+                {{ 'UNABLE_TO_FIND_FARE' | translate }}
+            }
+            @if (startTripData.type === tripTypeDetails.FMS_BUS_STOP_MISMATCH) {
+                {{ 'UNABLE_TO_FIND_FARE' | translate }}
+            } -->
+        </h2>
+        <h3>
+            {{ 'PENDING_FOR_FMS_INFO_CAPTION' | translate }}
+
+            <!-- @if (startTripData.type === tripTypeDetails.FMS_NO_INFO) {
+                {{ 'PENDING_FOR_FMS_INFO_CAPTION' | translate }}
+            } -->
+            <!-- @if (startTripData.type === tripTypeDetails.FMS_TRIP_INFO_MISMATCH) {
+                {{ 'UNABLE_TO_FIND_FARE_CAPTION' | translate }}
+            }
+            @if (startTripData.type === tripTypeDetails.FMS_BUS_STOP_MISMATCH) {
+                {{ 'UNABLE_TO_FIND_FARE_CAPTION' | translate }}
+            } -->
+        </h3>
+
+        <!-- <button
+            [ngClass]="{
+                btn: true,
+                'btn-confirm': true,
+                'btn-proceed': startTripData.type === tripTypeDetails.FMS_BUS_STOP_MISMATCH
+            }"
+        >
+            @if (startTripData.type === tripTypeDetails.FMS_BUS_STOP_MISMATCH) {
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+            } @else {
+                <img src="/assets/images/svg/docs-icon.svg" alt="" />
+            }
+            <span class="text">
+                @if (startTripData.type === tripTypeDetails.FMS_BUS_STOP_MISMATCH) {
+                    {{ 'PROCEED' | translate }}
+                } @else {
+                    {{ 'SELECT_FARE_TRIP_DETAILS' | translate }}
+                }
+            </span>
+        </button> -->
+        <button
+            [ngClass]="{
+                btn: true,
+                'btn-confirm': true
+            }"
+            (click)="handleSettingTrip()"
+        >
+            <img src="/assets/images/svg/docs-icon.svg" alt="" />
+            <span class="text">
+                {{ 'SELECT_FARE_TRIP_DETAILS' | translate }}
+            </span>
+        </button>
+    </div>
+</div>

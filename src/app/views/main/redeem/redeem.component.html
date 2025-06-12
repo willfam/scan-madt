@@ -1,0 +1,18 @@
+<div class="redeem-container">
+    <div class="dialog">
+        <div class="dialog-header">
+            <p [innerHTML]="'REDEEM_COMPLI_TICKET' | translate"></p>
+        </div>
+        <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+        <div class="cf-btn-group">
+            <div class="btn btn-cancel" (click)="handleRedeem(false)">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </div>
+            <div class="btn btn-confirm" (click)="handleRedeem(true)">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'CONFIRM' | translate }}</span>
+            </div>
+        </div>
+    </div>
+</div>

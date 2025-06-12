@@ -1,0 +1,123 @@
+<div class="calibrate-bls-calibration-page" [ngSwitch]="step">
+    <div *ngSwitchCase="1" class="step-1">
+        <div class="back-button" (click)="goBack()">{{ 'BACK' | translate }}</div>
+        <h2 class="title">{{ 'BLS_CALIBRATION' | translate }}</h2>
+        <div class="content">
+            <p>{{ 'PRESS_START_CALIBRE_STO_OR_END' | translate }}</p>
+            <div class="btn-group">
+                <button class="button" [disabled]="!isStart" (click)="handleSelect(1)">
+                    <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
+                    <div class="text">{{ 'STOP' | translate }}</div>
+                </button>
+                <button class="button" [disabled]="isStart" (click)="handleSelect(2)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <div class="text">{{ 'START' | translate }}</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="2" class="step-2">
+        <div class="back-button" (click)="goBack()">{{ 'BACK' | translate }}</div>
+        <h2 class="title">{{ 'CALIBRATING' | translate }}</h2>
+        <div class="content">
+            <p>{{ 'PRESS_START_CALIBRE_STO_OR_END' | translate }}</p>
+            <div class="btn-group">
+                <button class="button" [disabled]="!isStart" (click)="handleSelect(1)">
+                    <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
+                    <div class="text">{{ 'STOP' | translate }}</div>
+                </button>
+                <button class="button" [disabled]="isStart" (click)="handleSelect(3)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <div class="text">{{ 'START' | translate }}</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- <confirm-dialog *ngSwitchCase="3" title="Send Command to BLS" [btnConfirm]="true" (onConfirm)="handleSelect(4)">
+    </confirm-dialog> -->
+
+    <div *ngSwitchCase="3" class="confirmation">
+        <h2 class="title">Send Command to BLS</h2>
+        <div class="content">
+            <div class="confirm">BLS is Disabled</div>
+            <div class="btn-group">
+                <div class="btn btn-confirm" (click)="handleSelect(4)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="4" class="step-4">
+        <!-- <div class="back-button" (click)="goBack()">{{ 'BACK' | translate }}</div> -->
+        <h2 class="title">{{ 'ENTER_DISTANCE_IN_METERS' | translate }}</h2>
+        <div class="content">
+            <div class="input-group">
+                <p>{{ 'DISTANCE_IN_METERS' | translate }}</p>
+                <input id="inputField" />
+            </div>
+        </div>
+        <div class="keyboard">
+            <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+        </div>
+    </div>
+
+    <!-- <confirm-dialog
+        *ngSwitchCase="5"
+        title="Confirmation"
+        [btnConfirm]="true"
+        [btnCancel]="true"
+        (onConfirm)="handleConfirm(true)"
+        (onCancel)="handleConfirm(false)"
+    >
+        <div class="dialog-content" content>
+            Are you sure you want to <br />
+            change the distance?
+        </div>
+    </confirm-dialog> -->
+
+    <div *ngSwitchCase="5" class="confirmation">
+        <h2 class="title">{{ 'CONFIRMATION' | translate }}</h2>
+        <div class="content">
+            <div class="confirm">
+                Are you sure you want to <br />
+                change the distance?
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="handleConfirm(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleConfirm(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <confirm-dialog
+        *ngSwitchCase="6"
+        title="Calculated Calibration"
+        content="Odometer Factor is {{ inputValue }}"
+        [btnConfirm]="true"
+        (onConfirm)="handleFinish()"
+    >
+    </confirm-dialog> -->
+
+    <div *ngSwitchCase="6" class="confirmation">
+        <h2 class="title">Calculated Calibration</h2>
+        <div class="content">
+            <div class="confirm">Odometer Factor is {{ inputValue }}</div>
+            <div class="btn-group">
+                <div class="btn btn-confirm" (click)="handleFinish()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

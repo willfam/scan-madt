@@ -1,0 +1,59 @@
+<div class="version-info-page">
+    @if (isLoading || ResponseStatus.PROGRESS === versionInfo.status) {
+        <div class="loading">
+            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+            <div>Loading...</div>
+        </div>
+    } @else if (ResponseStatus.ERROR === versionInfo.status) {
+        <div class="error">
+            <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+            <div class="title">Communication Error</div>
+            <div class="content">{{ versionInfo.message || '' }}</div>
+            <div class="btn-group">
+                <div class="btn btn-ok" (click)="handleRetry()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>OK</span>
+                </div>
+            </div>
+        </div>
+    } @else {
+        <ng-scrollbar
+            #scrollable
+            [buttons]="true"
+            trackClass="scrollbar-track"
+            thumbClass="scrollbar-thumb"
+            buttonClass="scrollbar-button"
+        >
+            <h3 class="title">{{ 'VER_INFO' | translate }}</h3>
+            <table class="table">
+                <tr>
+                    <th>
+                        <div class="table-header">
+                            <p>{{ 'DEVICE' | translate }}</p>
+                            <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <p>{{ 'SOFT_WARE' | translate }}</p>
+                            <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <p>{{ 'READER_FIRMWARE' | translate }}</p>
+                            <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                        </div>
+                    </th>
+                </tr>
+                @for (versionInfo of versionInfo.versionInfoList; track versionInfo.device) {
+                    <tr>
+                        <td>{{ versionInfo.device }}</td>
+                        <td>{{ versionInfo.software }}</td>
+                        <td>{{ versionInfo.readerFirmware }}</td>
+                    </tr>
+                }
+            </table>
+        </ng-scrollbar>
+    }
+</div>

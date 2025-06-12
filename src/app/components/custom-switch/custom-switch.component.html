@@ -1,0 +1,15 @@
+<label class="switch">
+    <input
+        type="checkbox"
+        id="toggleSwitch"
+        (change)="handleChangeSwitch($event)"
+        [checked]="checked"
+        [disabled]="disabled"
+    />
+    <span class="slider">
+        <ng-container *ngIf="displayText">
+            <span class="on" *ngIf="innerChecked">{{ 'ON' | translate }}</span>
+            <span class="off" *ngIf="!innerChecked">{{ 'OFF' | translate }}</span>
+        </ng-container>
+    </span>
+</label>

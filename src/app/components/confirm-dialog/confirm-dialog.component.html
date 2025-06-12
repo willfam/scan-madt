@@ -1,0 +1,24 @@
+<div class="dia-log">
+    <div class="dia-log-main" [style]="style ? style : ''">
+        <ng-content select="[icon]"></ng-content>
+        <h3 *ngIf="title" class="dia-log-title">{{ title }}</h3>
+        <ng-content select="[title]"></ng-content>
+        <div *ngIf="content" class="dia-log-content">{{ content }}</div>
+        <ng-content select="[content]"></ng-content>
+        <ng-content></ng-content>
+        <div class="btn-group">
+            <div *ngIf="btnCancel" class="button button-cancel" (click)="handleClick('cancel')">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </div>
+            <div *ngIf="btnConfirm" class="button button-confirm" (click)="handleClick('confirm')">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'CONFIRM' | translate }}</span>
+            </div>
+            <div *ngIf="btnOK" class="button button-ok" (click)="handleClick('ok')">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'OKAY' | translate }}</span>
+            </div>
+        </div>
+    </div>
+</div>

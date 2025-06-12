@@ -1,0 +1,29 @@
+<div class="gyro-switch-page">
+    <div *ngIf="step === 1" class="step-1">
+        <h2 class="title">{{ 'GYRO_SWITCH' | translate }}</h2>
+        <div class="content">
+            <p>{{ 'CURRENT_GYRO_SWITH_IS_FIXED' | translate }}</p>
+            <div class="btn-group">
+                <div class="button" (click)="handleSelect()">
+                    <img src="/assets/images/icons/maintenance/auto.svg" alt="" />
+                    <div class="text">{{ 'AUTO' | translate }}</div>
+                </div>
+                <div class="button" (click)="handleSelect()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <div class="text">{{ 'FIX' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <confirm-dialog
+        *ngIf="step === 2"
+        [title]="'GYRO_SWITCH_CONFIRMATION' | translate"
+        [content]="'GYRO_SWITCH_CHANGE_TO_FIXED' | translate"
+        [btnCancel]="true"
+        [btnConfirm]="true"
+        (onConfirm)="handleFinish()"
+        (onCancel)="handleFinish()"
+    >
+    </confirm-dialog>
+</div>

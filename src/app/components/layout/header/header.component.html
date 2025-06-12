@@ -1,0 +1,69 @@
+<div class="madt-header">
+    @if (!onlyDateTime) {
+        <div class="navigation-section">
+            @for (button of buttons; track button.label) {
+                @if (button.screens.includes(screen)) {
+                    @if (button.type === 'switch') {
+                        <mat-slide-toggle
+                            [checked]="toggleSlide(button.label)"
+                            (change)="handleToggle($event, 'triggerBOLCButton', button.msgID)"
+                        >
+                            {{ button.label | translate }}
+                        </mat-slide-toggle>
+                    } @else if (button.type === 'button') {
+                        <div
+                            [class]="button.class"
+                            [id]="button.id"
+                            [ngClass]="{
+                                disabled: disableButtons?.includes(button.id),
+                                active: activeButtons?.includes(button.id)
+                            }"
+                            (click)="
+                                button.navigateTo
+                                    ? handleNavigate(button.navigateTo)
+                                    : button.onClick
+                                      ? button.onClick(button.data, button)
+                                      : ''
+                            "
+                        >
+                            <img [src]="button.imgSrc" alt="" />
+                            {{ button.label | translate }}
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div class="status-indicators" id="main-status">
+            @for (status of statusIndicators; track status.label) {
+                <div class="status" [ngClass]="status.connected ? '' : 'error'">
+                    <img
+                        [src]="
+                            status.connected
+                                ? '/assets/images/icons/main/check.svg'
+                                : '/assets/images/icons/main/delete.svg'
+                        "
+                        alt=""
+                    />
+                    {{ status.label }}
+                </div>
+            }
+            <!-- <div *ngFor="let status of statusIndicators" class="status" [ngClass]="status.connected ? '' : 'error'">
+                <img
+                    [src]="
+                        status.connected
+                            ? '/assets/images/icons/main/check.svg'
+                            : '/assets/images/icons/main/delete.svg'
+                    "
+                    alt=""
+                />
+                {{ status.label }}
+            </div> -->
+        </div>
+    } @else {
+        <div class="navigation-section"></div>
+    }
+    <div class="datetime-section">
+        <div class="date">{{ currentDate | date: 'dd/MM/yyyy' }}</div>
+        <div class="time">{{ currentDate | date: 'HH:mm:ss' }}</div>
+    </div>
+</div>

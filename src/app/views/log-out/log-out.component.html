@@ -1,0 +1,21 @@
+<ng-container>
+    <app-header [screen]="auth.loggedInType === 2 ? 'maintenance' : ''" [activeButtons]="['log-out-btn']"></app-header>
+    <div class="log-out">
+        <div class="dialog">
+            <div class="dialog-header">
+                <p [innerHTML]="'Logout' | translate"></p>
+            </div>
+            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+            <div class="cf-btn-group">
+                <div class="btn btn-cancel" (click)="handleLogout(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleLogout(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

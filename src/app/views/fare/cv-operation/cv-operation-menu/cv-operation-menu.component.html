@@ -1,0 +1,13 @@
+<div class="device-operation-content">
+    <div class="back-button" (click)="goBack()">Back</div>
+    <h1 class="device-operation-title">Select CV Operations</h1>
+    <div class="device-operation-button-group">
+        <button class="device-operation-button" (click)="handleNavigate('/show-cv-status')">Show CV Status</button>
+        <button class="device-operation-button" (click)="handleNavigate('/set-cv')">Set CV ENTRY/EXIT</button>
+        <button class="device-operation-button" (click)="handleNavigate('/cv-mode-control')">CV Mode Control</button>
+        <button class="device-operation-button" (click)="handleNavigate('/power-all-cv-on')">Power All CV ON</button>
+        <button class="device-operation-button" (click)="handleNavigate('/power-all-cv-off')">Power all CV OFF</button>
+        <button class="device-operation-button" (click)="handleNavigate('/cv-power-control')">CV Power Control</button>
+        <button class="device-operation-button" (click)="handleNavigate('/reset-all-cv')">Reset All CV</button>
+    </div>
+</div>

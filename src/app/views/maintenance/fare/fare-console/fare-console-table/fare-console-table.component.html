@@ -1,0 +1,90 @@
+<div class="fare-console" *ngIf="fareConsoleSetting">
+    <div class="fare-console-list">
+        <div class="scrollbar">
+            <ng-scrollbar
+                #scrollable
+                [buttons]="true"
+                trackClass="scrollbar-track"
+                thumbClass="scrollbar-thumb"
+                buttonClass="scrollbar-button"
+            >
+                <ul>
+                    <li class="row">
+                        <div class="left">{{ 'DECK_TYPE' | translate }}</div>
+                        <div class="right" (click)="handleNavigate('/deck-type')">
+                            <p class="value" *ngIf="fareConsoleSetting">
+                                {{ fareConsoleSetting.deckType.label | translate }}
+                            </p>
+                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'SECONDARY_BLS' | translate }}</div>
+                        <div class="right" (click)="handleNavigate('/bls')">
+                            @if (fareConsoleSetting.blsStatus === 1) {
+                                <p class="value" *ngIf="fareConsoleSetting">
+                                    {{ 'ENABLE' | translate }}
+                                </p>
+                            } @else if (fareConsoleSetting.blsStatus === 2) {
+                                <p class="value" *ngIf="fareConsoleSetting">
+                                    {{ 'DISABLED' | translate }}
+                                </p>
+                            } @else {
+                                <p class="value" *ngIf="fareConsoleSetting"></p>
+                            }
+
+                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'TIME' | translate }}</div>
+                        <div class="right" (click)="handleNavigate('/time-setting')">
+                            <p class="value" *ngIf="fareConsoleSetting">
+                                {{ fareConsoleSetting.time }}
+                            </p>
+                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'DATE' | translate }}</div>
+                        <div class="right" (click)="handleNavigate('/date-setting')">
+                            <p class="value" *ngIf="fareConsoleSetting">
+                                {{ fareConsoleSetting.date }}
+                            </p>
+                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'BUS_ID' | translate }}</div>
+                        <div class="right" (click)="handleNavigate('/bus-id')">
+                            <p class="value" *ngIf="fareConsoleSetting">
+                                {{ fareConsoleSetting.busId }}
+                            </p>
+                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'COMPLIMENTARY_DAYS' | translate }}</div>
+                        <div class="right" (click)="handleNavigate('/complimentary-day')">
+                            <p class="value" *ngIf="fareConsoleSetting">
+                                {{ fareConsoleSetting.complimentaryDays }}
+                            </p>
+                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left" (click)="handleNavigate('/delete-parameter')">
+                            {{ 'DELETE_PARAMETERS' | translate }}
+                        </div>
+                    </li>
+                </ul>
+            </ng-scrollbar>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button [disabled]="!validateFareConsoleForm()" class="btn btn-confirm" (click)="handleConfirmFareConsole()">
+            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+            <span class="text">{{ 'CONFIRM' | translate }}</span>
+        </button>
+    </div>
+</div>

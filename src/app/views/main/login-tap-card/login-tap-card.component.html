@@ -1,0 +1,307 @@
+@if (signInTapCardData.msgID === MsgID.BC_TAP_CARD_LOGIN) {
+    @if (signInTapCardData.status === ResponseStatus.ERROR) {
+        <div class="error-wrapper">
+            <div class="error-message">
+                <img (click)="backToLogin()" src="/assets/images/icons/main/error/error-big.svg" />
+                <h2 class="text-bold">
+                    {{ signInTapCardData.message || '' | translate }}
+                </h2>
+                <!-- <div class="btn" (click)="handleRetryTapCard()">
+                <img src="/assets/images/icons/main/retry-big.svg" /> Retry
+            </div> -->
+            </div>
+            <div class="lang-cont">
+                <button
+                    (click)="handleChangeLanguage('EN')"
+                    mat-button
+                    [ngClass]="{ active: currentLanguage === 'EN' }"
+                >
+                    English
+                </button>
+                |
+                <button
+                    (click)="handleChangeLanguage('CH')"
+                    mat-button
+                    [ngClass]="{ active: currentLanguage === 'CH' }"
+                >
+                    华语
+                </button>
+            </div>
+            <div class="text-center content">
+                <h1 class="text-bold">{{ 'TAP_ON_THE_CARD' | translate }}</h1>
+                <h2>
+                    {{ outOfServiceData.title || ('OUT_OF_SERVICE' | translate) }}
+                    @if (outOfServiceData.action) {
+                        <br />
+                        {{ outOfServiceData.action }}
+                    }
+                    @if (outOfServiceData.message) {
+                        <br />
+                        {{ outOfServiceData.message }}
+                    }
+                    @if (outOfServiceData.reason) {
+                        <br />
+                        {{ outOfServiceData.reason }}
+                    }
+                </h2>
+                <img src="/assets/images/svg/sign-in-img.svg" />
+            </div>
+        </div>
+    } @else if (signInTapCardData.status === ResponseStatus.PROGRESS) {
+        <div class="wrapper">
+            <div class="progress-wrapper">
+                <h2 class="title">{{ 'FMS' | translate }}</h2>
+                <div class="content">Sending Driver Details & Querying Duty Number</div>
+                <!-- <div class="progress-bar">
+                    <div class="progress" [ngStyle]="{ width: submitProgress + '%' }"></div>
+                </div> -->
+            </div>
+        </div>
+    } @else if (signInTapCardData.message === 'LOGIN_SUCCESS_NEED_PIN') {
+        <div class="wrapper">
+            <!-- <div class="page-header">
+                <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+            </div> -->
+            <div>
+                <div class="content">
+                    <div class="input-group">
+                        <p>Enter PIN</p>
+                        <input type="password" id="inputField" />
+                        <p *ngIf="pinError" class="error">
+                            {{ pinError | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="keyboard">
+                    <custom-keyboard
+                        [layout]="'numeric'"
+                        (onKeyPress)="handleChangeInput($event, 'PIN')"
+                    ></custom-keyboard>
+                </div>
+            </div>
+        </div>
+    }
+} @else if (signInTapCardData.msgID === MsgID.BC_TAP_CARD_PIN) {
+    @if (signInTapCardData.status === ResponseStatus.ERROR) {
+        @if (signInTapCardData.message === 'PIN_ERROR_LOGIN_TERMINATE') {
+            <div class="wrapper">
+                <!-- <div class="page-header">
+                    <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+                </div> -->
+                <div class="termination">
+                    <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+                    <div class="title">{{ 'LOGON_TERMINATED' | translate }}</div>
+                    <div class="content">{{ 'TOO_MANY_TIME_TRIES' | translate: { type: 'PIN' } }}</div>
+                </div>
+            </div>
+        } @else {
+            <div class="wrapper">
+                <!-- <div class="page-header">
+                    <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+                </div> -->
+                <div>
+                    <div class="content">
+                        <div class="input-group">
+                            <p>Enter PIN</p>
+                            <input type="password" id="inputField" [value]="signInTapCardData['pin'] || ''" />
+                            <p *ngIf="signInTapCardData.message" class="error">
+                                {{ signInTapCardData.message | translate }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="keyboard">
+                        <custom-keyboard
+                            [layout]="'numeric'"
+                            (onKeyPress)="handleChangeInput($event, 'PIN')"
+                        ></custom-keyboard>
+                    </div>
+                </div>
+            </div>
+        }
+    } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
+        <div class="wrapper">
+            <div class="progress-wrapper">
+                <h2 class="title">{{ 'FMS' | translate }}</h2>
+                <div class="content">Sending Driver Details & Querying Duty Number</div>
+                <!-- <div class="progress-bar">
+                    <div class="progress" [ngStyle]="{ width: submitProgress + '%' }"></div>
+                </div> -->
+            </div>
+        </div>
+    } @else if (signInTapCardData.msgSubID === 3) {
+        <div class="wrapper">
+            <!-- <div class="page-header">
+                <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+            </div> -->
+            <div>
+                <div class="content">
+                    <div class="input-group">
+                        <p>Enter Duty Number</p>
+                        <input id="inputField" [value]="signInTapCardData.dutyNumber" />
+                    </div>
+                </div>
+                <div class="keyboard">
+                    <custom-keyboard
+                        [layout]="'numeric'"
+                        (onKeyPress)="handleChangeInput($event, 'dutyNumber')"
+                    ></custom-keyboard>
+                </div>
+            </div>
+        </div>
+    }
+} @else if (signInTapCardData.msgID === MsgID.BC_TAP_CARD_DUTY) {
+    @if (signInTapCardData.status === ResponseStatus.ERROR) {
+        <div class="wrapper">
+            <!-- <div class="page-header">
+                <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+            </div> -->
+            <div>
+                <div class="content">
+                    <div class="input-group">
+                        <p>Enter Duty Number</p>
+                        <input id="inputField" [value]="signInTapCardData['dutyNumber'] || ''" />
+                        <p *ngIf="signInTapCardData.message" class="error">
+                            {{ signInTapCardData.message | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="keyboard">
+                    <custom-keyboard
+                        [layout]="'numeric'"
+                        (onKeyPress)="handleChangeInput($event, 'dutyNumber')"
+                    ></custom-keyboard>
+                </div>
+            </div>
+        </div>
+    } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
+        <div class="wrapper">
+            <div class="progress-wrapper">
+                <h2 class="title">{{ 'FMS' | translate }}</h2>
+                <div class="content">Sending Duty Number</div>
+                <!-- <div class="progress-bar">
+                    <div class="progress" [ngStyle]="{ width: submitProgress + '%' }"></div>
+                </div> -->
+            </div>
+        </div>
+    }
+} @else if (signInTapCardData.msgID === MsgID.MS_TAP_CARD_LOGIN) {
+    @if (signInTapCardData.status === ResponseStatus.ERROR) {
+        <div class="error-wrapper">
+            <div class="error-message">
+                <img (click)="backToLogin()" src="/assets/images/icons/main/error/error-big.svg" />
+                <h2 class="text-bold">
+                    {{ signInTapCardData.message || '' | translate }}
+                </h2>
+                <!-- <div class="btn" (click)="handleRetryTapCard()">
+                <img src="/assets/images/icons/main/retry-big.svg" /> Retry
+            </div> -->
+            </div>
+            <div class="lang-cont">
+                <button
+                    (click)="handleChangeLanguage('EN')"
+                    mat-button
+                    [ngClass]="{ active: currentLanguage === 'EN' }"
+                >
+                    English
+                </button>
+                |
+                <button
+                    (click)="handleChangeLanguage('CH')"
+                    mat-button
+                    [ngClass]="{ active: currentLanguage === 'CH' }"
+                >
+                    华语
+                </button>
+            </div>
+            <div class="text-center content">
+                <h1 class="text-bold">{{ 'TAP_ON_THE_CARD' | translate }}</h1>
+                <h2>
+                    {{ outOfServiceData.title || ('OUT_OF_SERVICE' | translate) }}
+                    @if (outOfServiceData.action) {
+                        <br />
+                        {{ outOfServiceData.action }}
+                    }
+                    @if (outOfServiceData.message) {
+                        <br />
+                        {{ outOfServiceData.message }}
+                    }
+                    @if (outOfServiceData.reason) {
+                        <br />
+                        {{ outOfServiceData.reason }}
+                    }
+                </h2>
+                <img src="/assets/images/svg/sign-in-img.svg" />
+            </div>
+        </div>
+    } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
+        <div class="wrapper">
+            <!-- <div class="page-header">
+                <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+            </div> -->
+            <div>
+                <div class="content">
+                    <div class="input-group">
+                        <p>Maintenance Card Detected</p>
+                        <label>Enter PIN</label>
+                        <input type="password" id="inputField" />
+                        <p *ngIf="pinError" class="error">
+                            {{ pinError | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="keyboard">
+                    <custom-keyboard
+                        [layout]="'numeric'"
+                        (onKeyPress)="handleChangeInput($event, 'PIN', true)"
+                    ></custom-keyboard>
+                </div>
+            </div>
+        </div>
+    }
+} @else if (signInTapCardData.msgID === MsgID.MS_TAP_CARD_PIN) {
+    <div class="wrapper">
+        <!-- <div class="page-header">
+            <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+        </div> -->
+        @if (signInTapCardData.status === ResponseStatus.ERROR) {
+            <div>
+                <div class="content">
+                    <div class="input-group">
+                        <p>Maintenance Card Detected</p>
+                        <label>Enter PIN</label>
+                        <input type="password" id="inputField" [value]="signInTapCardData['pin'] || ''" />
+                        <p *ngIf="signInTapCardData.message" class="error">
+                            {{ signInTapCardData.message | translate }}
+                        </p>
+                    </div>
+                </div>
+                <div class="keyboard">
+                    <custom-keyboard
+                        [layout]="'numeric'"
+                        (onKeyPress)="handleChangeInput($event, 'PIN', true)"
+                    ></custom-keyboard>
+                </div>
+            </div>
+        } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
+            <div class="wrapper">
+                <div class="page-header">
+                    <div class="back-button" (click)="backToLogin()">{{ 'BACK' | translate }}</div>
+                </div>
+                <div>
+                    <div class="content">
+                        <div class="input-group">
+                            <p>Enter Duty Number</p>
+                            <input id="inputField" value="9999" />
+                        </div>
+                    </div>
+                    <div class="keyboard">
+                        <custom-keyboard
+                            [layout]="'numeric'"
+                            (onKeyPress)="handleChangeInput($event, 'dutyNumber')"
+                        ></custom-keyboard>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

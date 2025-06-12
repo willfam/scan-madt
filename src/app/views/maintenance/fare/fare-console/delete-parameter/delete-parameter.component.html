@@ -1,0 +1,70 @@
+<div class="delete-parameter">
+    @if (
+        MsgID.MAINTENANCE_DELETE_PARAMETER === fareConsoleSetting.msgID &&
+        fareConsoleSetting.status === ResponseStatus.PROGRESS
+    ) {
+        <div class="progress-wrapper">
+            <h2 class="title">{{ 'DELETE_PARAMETERS' | translate }}</h2>
+            <div class="content">Deleting Parameter Files...</div>
+            <div class="progress-bar">
+                <div class="progress" [ngStyle]="{ width: fareConsoleSetting.percentage + '%' }"></div>
+            </div>
+        </div>
+    } @else if (
+        MsgID.MAINTENANCE_DELETE_PARAMETER === fareConsoleSetting.msgID &&
+        fareConsoleSetting.status === ResponseStatus.SUCCESS
+    ) {
+        <div>
+            <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+            <div class="title">Success</div>
+            <div class="content">All parameter file deleted</div>
+            <div class="btn-group">
+                <div class="btn btn-ok" (click)="handleClearDeleteParameter()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>OK</span>
+                </div>
+            </div>
+        </div>
+    } @else if (
+        MsgID.MAINTENANCE_DELETE_PARAMETER === fareConsoleSetting.msgID &&
+        fareConsoleSetting.status === ResponseStatus.ERROR
+    ) {
+        <div>
+            <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+            <div class="title">Error</div>
+            <div class="content">
+                {{
+                    fareConsoleSetting.message
+                        ? (fareConsoleSetting.message | translate)
+                        : 'Failed to delete all parameter files.'
+                }}
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-ok" (click)="handleClearDeleteParameter()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>OK</span>
+                </div>
+            </div>
+        </div>
+    } @else {
+        <ng-container>
+            <div class="back-button" (click)="goBack()">{{ 'BACK' | translate }}</div>
+            <div>
+                <h2 class="title">{{ 'THIS_WILL_DEL_ALL_PARAMS_FILE' | translate }}</h2>
+                <div class="content">
+                    <p class="label">{{ 'DO_YOU_WANT_TO_DELETE' | translate }}?</p>
+                    <div class="btn-group">
+                        <div class="btn btn-cancel" (click)="goBack()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </div>
+                        <div class="btn btn-confirm" (click)="handleDeleteParameter()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>{{ 'CONFIRM' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    }
+</div>

@@ -1,0 +1,67 @@
+<div class="cancel-ride">
+    <div class="layout">
+        <div class="madt-breadcrumb">
+            <img src="/assets/images/icons/ticketing/ticket.svg" />
+            <a [routerLink]="['/fare']">Fare</a>
+            <span>></span>
+            <p>{{ (cv === 'CV1' ? 'CANCEL_RIDE_CV1' : 'CANCEL_RIDE_CV2') | translate }}</p>
+        </div>
+        <div class="madt-content">
+            @if (ResponseStatus.PROGRESS === cancelRide.status) {
+                <div class="dialog">
+                    <div class="dialog-header">
+                        <p [innerHTML]="'CANCEL_RIDE_CV_IN_PROGRESS' | translate: { cv: cv }"></p>
+                    </div>
+                    <p class="confirm-msg">{{ 'PRESS_CANCEL_TO_TERMINATE' | translate }}</p>
+                    <div class="btn-group">
+                        <button class="btn btn-cancel" (click)="handleStopCancelRide()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            } @else if (ResponseStatus.SUCCESS === cancelRide.status) {
+                <div class="dialog">
+                    <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+                    <h3 class="dialog-header">{{ 'SUCCESS' | translate }}</h3>
+                    <div class="confirm-msg">{{ 'CV_IS_CANCELLED' | translate: { cv: cv } }}</div>
+                    <div class="btn-group">
+                        <button class="btn btn-ok" (click)="backToFare()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>OK</span>
+                        </button>
+                    </div>
+                </div>
+            } @else if (ResponseStatus.ERROR === cancelRide.status) {
+                <div class="dialog">
+                    <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+                    <h3 class="dialog-header">{{ 'ERROR' | translate }}</h3>
+                    <div class="confirm-msg">{{ 'CV_IS_CANCELLED' | translate: { cv: cv } }}</div>
+                    <div class="btn-group">
+                        <button class="btn btn-ok">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>OK</span>
+                        </button>
+                    </div>
+                </div>
+            } @else {
+                <div class="dialog">
+                    <div class="dialog-header">
+                        <p [innerHTML]="'CANCEL_RIDE' | translate: { cv: cv }"></p>
+                    </div>
+                    <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+                    <div class="btn-group">
+                        <button class="btn btn-cancel" (click)="handleCancelRide()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </button>
+                        <button class="btn btn-confirm" (click)="handleConfirmCancelRide()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>{{ 'CONFIRM' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,267 @@
+@if (auth.isLoggedIn && auth.loggedInType === 2) {
+    <ng-container>
+        <app-header screen=""></app-header>
+        <div class="lta-full-screen">
+            <div class="lta-logo"></div>
+            <h3 class="title">{{ 'ACCESS_DENIED' | translate }}</h3>
+        </div>
+    </ng-container>
+} @else {
+    <ng-container>
+        <app-header
+            [onlyDateTime]="
+                [mainUrl, languageSetting, fareConsoleSetting, tapCardLoginUrl, manualLoginUrl].includes(currentRoute)
+            "
+            [screen]="currentScreen"
+        ></app-header>
+        <div class="main-layout-page">
+            <div class="layout-content">
+                @if (
+                    ![
+                        mainUrl,
+                        loginUrl,
+                        outOfServiceUrl,
+                        outOfServiceUrlNoData,
+                        languageSetting,
+                        fareConsoleSetting,
+                        tapCardLoginUrl,
+                        manualLoginUrl,
+                        busOperation,
+                        busOperationStartTrip,
+                        startTripInvalidInfo,
+                        busOperationEndShift,
+                        commissioningInProgress,
+                        commissioningCompletedCleaning,
+                        commissioningClearingAllData,
+                        busOperationExternalDevices,
+                        dagwOperationUrl
+                    ].includes(currentRoute)
+                ) {
+                    <div class="left-content">
+                        <div [ngClass]="{ 'cv-block': true, 'cv-block-2': cvLists.length === 2 }">
+                            @for (cvData of cvLists; track cvData.id) {
+                                <div
+                                    class="title"
+                                    [ngClass]="{
+                                        active: cvData?.activeIcon || cvsActive.includes(cvData.id),
+                                        error: cvData.error,
+                                        'has-active-icon': cvData?.activeIcon
+                                    }"
+                                >
+                                    @if (cvData.error) {
+                                        <div>
+                                            <p class="count">
+                                                {{ cvData.id }} <img [src]="cvData?.activeIcon" alt="" />
+                                            </p>
+                                            <p
+                                                class="error-message"
+                                                [innerHTML]="cvData?.message || '' | translate"
+                                            ></p>
+                                            <img
+                                                (click)="closeErrorCv(cvData.id)"
+                                                class="close-btn"
+                                                src="/assets/images/icons/main/close-icon.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    } @else {
+                                        <div class="status-icon">
+                                            <div *ngIf="cvData.statuses.includes(cvStatusTypes.FREE)" class="free-text">
+                                                <p>Free</p>
+                                            </div>
+                                            <div class="number">{{ cvData.id }}</div>
+                                            <div class="cv-status-wrapper">
+                                                <img class="cv" src="/assets/images/icons/main/cv.svg" alt="" />
+                                                <div class="cv-status">
+                                                    <img
+                                                        *ngIf="
+                                                            cvData.statuses.includes(cvStatusTypes.ENTRY) ||
+                                                            cvData.statuses.includes(cvStatusTypes.ENTRY_EXIT)
+                                                        "
+                                                        src="/assets/images/icons/main/arrow-out.svg"
+                                                        alt=""
+                                                    />
+                                                    <img
+                                                        *ngIf="
+                                                            cvData.statuses.includes(cvStatusTypes.EXIT) ||
+                                                            cvData.statuses.includes(cvStatusTypes.ENTRY_EXIT)
+                                                        "
+                                                        src="/assets/images/icons/main/arrow-in.svg"
+                                                        alt=""
+                                                    />
+                                                    <img
+                                                        *ngIf="cvData.statuses.includes(cvStatusTypes.DISCONNECTED)"
+                                                        src="/assets/images/icons/main/close-circle.svg"
+                                                        alt=""
+                                                    />
+                                                    <img
+                                                        *ngIf="cvData.statuses.includes(cvStatusTypes.NO_TAPPING)"
+                                                        src="/assets/images/icons/main/not-allowed.svg"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if (cvData?.activeIcon) {
+                                            <div class="icon-text">
+                                                <img [src]="cvData?.activeIcon" alt="" />
+                                                <div class="text">{{ cvData?.label }}</div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <div class="button-control">
+                            <button class="button item1" (click)="updateLineActive(true)" appButtonSound>
+                                <img src="/assets/images/icons/main/polygon.svg" alt="" class="icon-up" />
+                            </button>
+                            <button class="button item2" (click)="updateLineActive(false)" appButtonSound>
+                                <img src="/assets/images/icons/main/downarrow.svg" alt="" class="icon-down" />
+                            </button>
+                            <button
+                                class="button item3"
+                                (click)="handleClickMainButton(MsgID.MAIN_FREE)"
+                                [class.active-link]="isRouteActive('/main/free')"
+                                appButtonSound
+                            >
+                                <div class="icon">
+                                    <img src="/assets/images/icons/main/free.svg" alt="" />
+                                </div>
+                                <p>{{ 'FREE' | translate }}</p>
+                            </button>
+
+                            <button
+                                class="button item4"
+                                (click)="navigate('main/cash-payment')"
+                                [class.active-link]="isRouteActive('/main/cash-payment')"
+                                appButtonSound
+                            >
+                                <div class="icon">
+                                    <img src="/assets/images/icons/main/cash.svg" alt="" />
+                                </div>
+                                <p>{{ 'CASH' | translate }}</p>
+                            </button>
+                            <button
+                                class="button item5"
+                                (click)="handleClickMainButton(MsgID.MAIN_FRONT_DOOR)"
+                                [class.active-link]="isRouteActive('/main/front-door')"
+                                appButtonSound
+                            >
+                                <div class="icon">
+                                    <img src="/assets/images/icons/main/door.svg" alt="" />
+                                </div>
+                                <p>{{ 'FRONT_DOOR' | translate }}</p>
+                            </button>
+                            <button
+                                class="button item6"
+                                (click)="handleClickMainButton(MsgID.BREAKDOWN)"
+                                [class.active-link]="isRouteActive('/main/breakdown')"
+                                appButtonSound
+                            >
+                                <div class="icon">
+                                    <img src="/assets/images/icons/main/breakdown.svg" alt="" />
+                                </div>
+                                <p>{{ 'BRKDWN' | translate }}</p>
+                            </button>
+                            <button
+                                class="button item7"
+                                (click)="handleClickMainButton(MsgID.MAIN_REDEEM)"
+                                [class.active-link]="isRouteActive('/main/redeem')"
+                                appButtonSound
+                            >
+                                <div class="icon">
+                                    <img src="/assets/images/icons/main/redeem.svg" alt="" />
+                                </div>
+                                <p>{{ 'REDEEM' | translate }}</p>
+                            </button>
+                            <button
+                                class="button item8"
+                                (click)="handleClickMainButton(MsgID.MAIN_REAR_DOORS)"
+                                [class.active-link]="isRouteActive('/main/rear-door')"
+                                appButtonSound
+                            >
+                                <div class="icon">
+                                    <img src="/assets/images/icons/main/rear-door.svg" alt="" />
+                                </div>
+                                <p>{{ 'REAR_DOOR' | translate }}</p>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                <div
+                    [class]="{
+                        'main-content': true,
+                        'boot-up-bg': [
+                            mainUrl,
+                            loginUrl,
+                            outOfServiceUrl,
+                            outOfServiceUrlNoData,
+                            languageSetting,
+                            fareConsoleSetting,
+                            tapCardLoginUrl,
+                            manualLoginUrl,
+                            dagwOperationUrl
+                        ].includes(currentRoute)
+                    }"
+                >
+                    <router-outlet></router-outlet>
+                    @if (showPop) {
+                        <div
+                            class="pop-up-wrapper"
+                            [ngClass]="{ 'has-loading': showPop.loading, 'hide-pop-up': hidePopup }"
+                        >
+                            <div>
+                                <div *ngIf="showPop.loading" class="small-loading">
+                                    <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                                </div>
+
+                                <h3 class="text-bold">
+                                    {{ showPop?.title | translate }}
+                                </h3>
+                                <h4>
+                                    {{ showPop?.caption | translate }}
+                                </h4>
+                                <button
+                                    *ngIf="!showPop.hideButton"
+                                    class="btn btn-confirm"
+                                    (click)="closePopUpHanlder()"
+                                >
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'OK' | translate }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    @if (busOffRoute.show) {
+                        <bus-off-route [disabled]="busOffRoute.disabled" (onOk)="handleTurnOffBusOfRoute()">
+                        </bus-off-route>
+                    }
+                    @if (disableBls.show) {
+                        <auto-disable-bls
+                            [disabled]="disableBls.disabled"
+                            (onOk)="handleConfirmDisableBls(true)"
+                            (onCancel)="handleConfirmDisableBls(false)"
+                        >
+                        </auto-disable-bls>
+                    }
+                </div>
+            </div>
+        </div>
+        @if (loading) {
+            <div class="loading"></div>
+        }
+        @if (shuttingDown.show) {
+            <app-shutting-down [message]="shuttingDown.message || ''"></app-shutting-down>
+        }
+
+        @if (shuttingDownWarning.show) {
+            <shutting-down-warning
+                [time]="shuttingDownWarning.message || ''"
+                (onConfirm)="handleIgnitionOff()"
+                [disabled]="shuttingDownWarning.disabled"
+            ></shutting-down-warning>
+        }
+    </ng-container>
+}

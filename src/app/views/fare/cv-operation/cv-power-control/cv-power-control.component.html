@@ -1,0 +1,170 @@
+<div class="cv-power-control">
+    <div class="back-button" (click)="goBack()">Back</div>
+    <ng-container>
+        <h2 class="title">CV Power Control</h2>
+        <div class="content">
+            @for (group of cvPowerControl.group; track group.id) {
+                <div class="row">
+                    <p class="label">
+                        {{ group.cvs.join(', ') }}
+                        <span
+                            [ngClass]="{
+                                active: group.status
+                            }"
+                            >{{ group.status ? 'On' : 'Off' }}</span
+                        >
+                    </p>
+                    <div class="switch">
+                        <custom-switch
+                            [checked]="group.status"
+                            (onChange)="handleToggleStatus(group.id)"
+                        ></custom-switch>
+                    </div>
+                </div>
+            }
+        </div>
+    </ng-container>
+
+    <!-- <ng-container *ngIf="step === 2">
+        <confirm-dialog
+            title="Success"
+            [content]="(selectedMode | uppercase) + ' has been Turn ' + (controlStatus[selectedMode] ? 'ON' : 'OFF')"
+            [btnOK]="true"
+            (onOK)="handleFinish()"
+        >
+            <div style="margin-bottom: 20px" icon>
+                <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+            </div>
+        </confirm-dialog>
+    </ng-container> -->
+
+    <!-- <div class="dia-log" *ngIf="step == 3">
+        <div class="dia-log-main">
+            <div class="dia-log-header">
+                <h3 class="dia-log-title">CV Power Control</h3>
+                <div class="close-btn" (click)="handleClose()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>Close</span>
+                </div>
+            </div>
+            <div class="dia-log-content">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">BEV1:</p>
+                                    <p class="cv-status" [ngClass]="{ 'cv-status-active': controlStatus.bev1 }">
+                                        {{ controlStatus.bev1 ? 'On' : 'Not Installed' }}
+                                    </p>
+                                </div>
+                                <div class="" right>
+                                    <custom-switch
+                                        [checked]="controlStatus.bev1"
+                                        [disabled]="true"
+                                        [displayText]="true"
+                                    ></custom-switch>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">BEV2:</p>
+                                    <p class="cv-status" [ngClass]="{ 'cv-status-active': controlStatus.bev2 }">
+                                        {{ controlStatus.bev2 ? 'On' : 'Not Installed' }}
+                                    </p>
+                                </div>
+                                <div class="" right>
+                                    <custom-switch
+                                        [checked]="controlStatus.bev2"
+                                        [disabled]="true"
+                                        [displayText]="true"
+                                    ></custom-switch>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">BXV1:</p>
+                                    <p class="cv-status" [ngClass]="{ 'cv-status-active': controlStatus.bxv1 }">
+                                        {{ controlStatus.bxv1 ? 'On' : 'Not Installed' }}
+                                    </p>
+                                </div>
+                                <div class="" right>
+                                    <custom-switch
+                                        [checked]="controlStatus.bxv1"
+                                        [disabled]="true"
+                                        [displayText]="true"
+                                    ></custom-switch>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">BXV2:</p>
+                                    <p class="cv-status" [ngClass]="{ 'cv-status-active': controlStatus.bxv2 }">
+                                        {{ controlStatus.bxv2 ? 'On' : 'Not Installed' }}
+                                    </p>
+                                </div>
+                                <div class="" right>
+                                    <custom-switch
+                                        [checked]="controlStatus.bxv2"
+                                        [disabled]="true"
+                                        [displayText]="true"
+                                    ></custom-switch>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">BXV3:</p>
+                                    <p class="cv-status" [ngClass]="{ 'cv-status-active': controlStatus.bxv3 }">
+                                        {{ controlStatus.bxv3 ? 'On' : 'Not Installed' }}
+                                    </p>
+                                </div>
+                                <div class="" right>
+                                    <custom-switch
+                                        [checked]="controlStatus.bxv3"
+                                        [disabled]="true"
+                                        [displayText]="true"
+                                    ></custom-switch>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="left">
+                                    <p class="cv-name">BXV4:</p>
+                                    <p class="cv-status" [ngClass]="{ 'cv-status-active': controlStatus.bxv4 }">
+                                        {{ controlStatus.bxv4 ? 'On' : 'Not Installed' }}
+                                    </p>
+                                </div>
+                                <div class="" right>
+                                    <custom-switch
+                                        [checked]="controlStatus.bxv4"
+                                        [disabled]="true"
+                                        [displayText]="true"
+                                    ></custom-switch>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div> -->
+</div>

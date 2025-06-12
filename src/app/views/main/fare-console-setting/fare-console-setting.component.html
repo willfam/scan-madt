@@ -1,0 +1,637 @@
+<div class="wrapper">
+    @if (hasSubmitError) {
+        <div class="fare-console-error">
+            <div>
+                <!-- <img src="/assets/images/icons/maintenance/error-success.svg" alt="" /> -->
+                <div class="title">Configuration Incomplete</div>
+                <div class="content">Please complete configuration to proceed</div>
+                <div class="btn-group">
+                    <div class="btn btn-ok" (click)="handleBackToConfiguration()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>OK</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'deckType') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a (click)="handleClickBack()">Configure Fare Console</a>
+                <span>></span>
+                <p>Deck Type</p>
+            </div>
+            <div class="madt-content">
+                <div class="deck-type">
+                    <ng-container>
+                        <h3 class="title">{{ 'SELECT_BUS_DECK_TYPE' | translate }}</h3>
+                        <div class="deck-type-list">
+                            <div class="scrollbar">
+                                <ng-scrollbar
+                                    #scrollable
+                                    [buttons]="true"
+                                    trackClass="scrollbar-track"
+                                    thumbClass="scrollbar-thumb"
+                                    buttonClass="scrollbar-button"
+                                >
+                                    <ul>
+                                        @for (deck of fareConsoleSetting.deckTypeList; track deck.id) {
+                                            <li
+                                                (click)="handleChangeDeckType(deck.id)"
+                                                [ngClass]="{
+                                                    selected: selectedDeckTypeId === deck.id
+                                                }"
+                                            >
+                                                {{ deck.label | translate }}
+                                            </li>
+                                        }
+                                    </ul>
+                                </ng-scrollbar>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <div class="button button-cancel" (click)="handleConfirmDeckType(false)">
+                                <img src="/assets/images/icons/main/close.svg" alt="" />
+                                <span>{{ 'CANCEL' | translate }}</span>
+                            </div>
+                            <div class="button button-confirm" (click)="handleConfirmDeckType(true)">
+                                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                <span class="text">{{ 'CONFIRM' | translate }}</span>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- <ng-container *ngIf="step === 2">
+                        <confirm-dialog
+                            [title]="'SUCCESS' | translate"
+                            [content]="'BUS_DECK_TYPE_CHANGED' | translate"
+                            [btnOK]="true"
+                            (onOK)="handleFinish()"
+                        >
+                            <div style="margin-bottom: 20px" icon>
+                                <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+                            </div>
+                        </confirm-dialog>
+                    </ng-container> -->
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'blsStatus') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a (click)="handleClickBack()">Configure Fare Console</a>
+                <span>></span>
+                <p>Secondary BLS</p>
+            </div>
+            <div class="madt-content">
+                <div class="bls">
+                    <div *ngIf="blsStep === 1">
+                        <h2 class="title">{{ 'SECONDARY_BLS_STATUS' | translate }}</h2>
+                        <div class="content">
+                            <p class="label">
+                                {{ 'STATUS' | translate }}:
+                                @if (!!fareConsoleSetting.blsStatus) {
+                                    <span class="value">{{
+                                        (fareConsoleSetting.blsStatus === 1 ? 'ENABLE' : 'DISABLED') | translate
+                                    }}</span>
+                                }
+                            </p>
+                            <div class="btn-group">
+                                <button
+                                    class="button"
+                                    [disabled]="fareConsoleSetting.blsStatus === 2"
+                                    (click)="handleChangeBlsStatus(2)"
+                                >
+                                    <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
+                                    <div class="text">{{ 'DISABLED' | translate }}</div>
+                                </button>
+                                <button
+                                    class="button"
+                                    [disabled]="fareConsoleSetting.blsStatus === 1"
+                                    (click)="handleChangeBlsStatus(1)"
+                                >
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <div class="text">{{ 'ENABLE' | translate }}</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="blsStep === 2">
+                        <h2 class="title">{{ 'CONFIRMATION' | translate }}</h2>
+                        <div class="content">
+                            <div class="confirm">
+                                {{
+                                    selectedBlsStatus === 1
+                                        ? ('BLS_STATUS_ENABLE' | translate) + '?'
+                                        : ('BLS_STATUS_DISABLE' | translate) + '?'
+                                }}
+                            </div>
+                            <div class="btn-group">
+                                <div class="btn btn-cancel" (click)="handleConfirmBlsStatus(false)">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </div>
+                                <div class="btn btn-confirm" (click)="handleConfirmBlsStatus(true)">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'CONFIRM' | translate }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'setTime') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a (click)="handleClickBack()">Configure Fare Console</a>
+                <span>></span>
+                <p>Time</p>
+            </div>
+            <div class="madt-content">
+                <div class="time-setting">
+                    <div class="back-button" (click)="handleClickBack()">{{ 'BACK' | translate }}</div>
+                    <div>
+                        <h2 class="title">{{ 'SET_TIME' | translate }}</h2>
+                        <div class="content">
+                            <p class="label">{{ 'TIME_FORMAT' | translate }}</p>
+                            <p class="value">{{ fareConsoleSetting.time }}</p>
+                            <div class="input-group">
+                                <p>{{ 'INPUT_TIME' | translate }}</p>
+                                <input id="inputField" />
+                                <p *ngIf="hasInputError" class="error">{{ 'INVALID_ENTRY' | translate }}</p>
+                            </div>
+                        </div>
+
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeInput($event, 'time')"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'setDate') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a (click)="handleClickBack()">Configure Fare Console</a>
+                <span>></span>
+                <p>Date</p>
+            </div>
+            <div class="madt-content">
+                <div class="time-setting">
+                    <div class="back-button" (click)="handleClickBack()">{{ 'BACK' | translate }}</div>
+                    <div>
+                        <h2 class="title">{{ 'SET_DATE' | translate }}</h2>
+                        <div class="content">
+                            <p class="label">{{ 'DATE_FORMAT' | translate }}</p>
+                            <p class="value">{{ fareConsoleSetting.date || '' }}</p>
+                            <div class="input-group">
+                                <p>{{ 'INPUT_DATE' | translate }}</p>
+                                <input id="inputField" />
+                                <p *ngIf="hasInputError" class="error">{{ 'INVALID_ENTRY' | translate }}</p>
+                            </div>
+                        </div>
+
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeInput($event, 'date')"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'complimentaryDays') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a (click)="handleClickBack()">Configure Fare Console</a>
+                <span>></span>
+                <p>Complimentary Days</p>
+            </div>
+            <div class="madt-content">
+                <div class="complimentary-day">
+                    <div class="back-button" (click)="handleClickBack()">{{ 'BACK' | translate }}</div>
+                    <div>
+                        <h2 class="title">{{ 'SET_COMPLIMENTARY_DAYS' | translate }}</h2>
+                        <div class="content">
+                            <p class="label">
+                                {{ 'CURRENT_DAYS' | translate }}:
+                                <span class="value">{{ fareConsoleSetting.complimentaryDays }}</span>
+                            </p>
+                            <div class="input-group">
+                                <p>{{ 'INPUT_CURRENT_DAYS' | translate }}</p>
+                                <input id="inputField" />
+                                <p *ngIf="hasInputError" class="error">{{ 'EXCEED_THE_MAXIMUM_DAYS' | translate }}</p>
+                            </div>
+                        </div>
+
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeInput($event, 'complimentaryDays')"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'deleteParameter') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a (click)="handleClickBack()">Configure Fare Console</a>
+                <span>></span>
+                <p>{{ 'DELETE_PARAMETERS' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="delete-parameter">
+                    @if (
+                        MsgID.DELETE_PARAMETER === fareConsoleSetting.msgID &&
+                        fareConsoleSetting.status === ResponseStatus.PROGRESS
+                    ) {
+                        <div class="progress-wrapper">
+                            <h2 class="title">{{ 'DELETE_PARAMETERS' | translate }}</h2>
+                            <div class="content">Deleting Parameter Files...</div>
+                            <div class="progress-bar">
+                                <div class="progress" [ngStyle]="{ width: fareConsoleSetting.percentage + '%' }"></div>
+                            </div>
+                        </div>
+                    } @else if (
+                        MsgID.DELETE_PARAMETER === fareConsoleSetting.msgID &&
+                        fareConsoleSetting.status === ResponseStatus.SUCCESS
+                    ) {
+                        <div>
+                            <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+                            <div class="title">Success</div>
+                            <div class="content">All parameter file deleted</div>
+                            <div class="btn-group">
+                                <div class="btn btn-ok" (click)="handleClearDeleteParameter()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>OK</span>
+                                </div>
+                            </div>
+                        </div>
+                    } @else if (
+                        MsgID.DELETE_PARAMETER === fareConsoleSetting.msgID &&
+                        fareConsoleSetting.status === ResponseStatus.ERROR
+                    ) {
+                        <div>
+                            <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+                            <div class="title">Error</div>
+                            <div class="content">
+                                {{
+                                    fareConsoleSetting.message
+                                        ? (fareConsoleSetting.message | translate)
+                                        : 'Failed to delete all parameter files.'
+                                }}
+                            </div>
+                            <div class="btn-group">
+                                <div class="btn btn-ok" (click)="handleClearDeleteParameter()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>OK</span>
+                                </div>
+                            </div>
+                        </div>
+                    } @else {
+                        <div>
+                            <h2 class="title">{{ 'THIS_WILL_DEL_ALL_PARAMS_FILE' | translate }}</h2>
+                            <div class="content">
+                                <p class="label">{{ 'DO_YOU_WANT_TO_DELETE' | translate }}?</p>
+                                <div class="btn-group">
+                                    <div class="btn btn-cancel" (click)="handleClickBack()">
+                                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                                        <span>{{ 'CANCEL' | translate }}</span>
+                                    </div>
+                                    <div class="btn btn-confirm" (click)="handleDeleteParameter()">
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <span>{{ 'CONFIRM' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'busId') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a (click)="handleClickBack()">Configure Fare Console</a>
+                <span>></span>
+                <p>Bus ID</p>
+            </div>
+            <div class="madt-content">
+                <div class="bus-id">
+                    @if (
+                        busIdData.status === ResponseStatus.ERROR && busIdData.msgID === MsgID.COMMISSION_BUS_ID_SUBMIT
+                    ) {
+                        <div class="bus-id-error">
+                            <div>
+                                <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+                                <div class="title">Error</div>
+                                <div class="content">
+                                    {{
+                                        busIdData.message
+                                            ? (busIdData.message | translate)
+                                            : ('PLEASE_RETRY_AGAIN' | translate)
+                                    }}
+                                </div>
+                                <div class="btn-group">
+                                    <div class="btn btn-ok" (click)="handleRetrySetBusId()">
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <span>OK</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    } @else {
+                        <ng-container *ngIf="busIdStep === 1">
+                            <h3 class="title">{{ 'BUS_ID' | translate }}</h3>
+                            <ul class="list">
+                                <li class="row">
+                                    <div class="left">{{ 'BUS_ID' | translate }}</div>
+                                    <div class="right" (click)="handleChangeStep(2)">
+                                        <p class="value">{{ busIdTemp }}</p>
+                                        <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <div class="left">{{ 'OPERATOR' | translate }}</div>
+                                    <div class="right" (click)="handleChangeStep(3)">
+                                        <p class="value">
+                                            <span
+                                                *ngIf="
+                                                    busIdData.operator?.['label'] &&
+                                                    busIdData.operator?.['serviceProvider']
+                                                "
+                                            >
+                                                {{ busIdData.operator?.['label'] }}-{{
+                                                    busIdData.operator?.['serviceProvider']
+                                                }}
+                                            </span>
+                                        </p>
+                                        <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <div class="left">{{ 'SERVICE_PROVIDER' | translate }}</div>
+                                    <div class="right" *ngIf="busIdData.operator?.['serviceProvider']">
+                                        <p class="value">{{ busIdData.operator?.['serviceProvider'] }}</p>
+                                        <!-- <img src="/assets/images/icons/main/chevron-right.svg" alt="" /> -->
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="btn-group">
+                                <div class="btn btn-cancel" (click)="backToFareConsole()">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </div>
+                                <div class="btn btn-confirm" (click)="handleSubmitForm()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <div *ngIf="busIdStep === 2" class="bus-id-opt">
+                            <div class="bus-id-opt-title">
+                                <h3>{{ 'PLEASE_ENTER_BUS_PLATE_NUM' | translate }}</h3>
+                            </div>
+                            <div class="update-wrapper">
+                                <mat-form-field appearance="outline" class="select-box">
+                                    <mat-select disableRipple placeholder="Select" [(value)]="busIdPrefix">
+                                        @for (prefix of busIdPrefixList; track prefix) {
+                                            <mat-option [value]="prefix">{{ prefix }}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                                <div class="input-box">
+                                    <div class="input-group">
+                                        <input [value]="busIdNumber" id="inputField" placeholder="Input Number" />
+                                        <p *ngIf="hasBusIdNumberError" class="error">
+                                            {{ 'WRONG_FORMAT' | translate }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group" *ngIf="!isShowKeyboard">
+                                <button class="btn btn-cancel" (click)="handleBusIdBack()">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </button>
+                                <button
+                                    [disabled]="!busIdNumber || !busIdPrefix"
+                                    class="btn btn-confirm"
+                                    (click)="handleSubmitBusId()"
+                                >
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                                </button>
+                            </div>
+                            <div *ngIf="isShowKeyboard" class="keyboard">
+                                <custom-keyboard
+                                    [layout]="'numeric'"
+                                    (onKeyPress)="handleChangeBusIdInput($event)"
+                                ></custom-keyboard>
+                            </div>
+                        </div>
+
+                        <div class="operator" *ngIf="busIdStep === 3">
+                            <div class="back-button" (click)="handleOperatorBack()">{{ 'BACK' | translate }}</div>
+                            <h3 class="title">{{ 'SELECT_OPERATOR' | translate }}</h3>
+                            <div class="operator-content">
+                                @if (!busIdData.operators?.length) {
+                                    <div class="loading">
+                                        <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                                        <div>Loading...</div>
+                                    </div>
+                                } @else {
+                                    <div class="scrollbar">
+                                        <ng-scrollbar
+                                            #scrollable
+                                            [buttons]="true"
+                                            trackClass="scrollbar-track"
+                                            thumbClass="scrollbar-thumb"
+                                            buttonClass="scrollbar-button"
+                                        >
+                                            <ul>
+                                                @for (operator of busIdData.operators; track operator.id) {
+                                                    <li
+                                                        (click)="handleChangeOperator(operator.id)"
+                                                        [ngClass]="{ selected: operatorIdTemp === operator.id }"
+                                                    >
+                                                        {{ operator.label | translate }} -
+                                                        {{ operator.serviceProvider }}
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </ng-scrollbar>
+                                    </div>
+                                }
+                            </div>
+                            <div class="btn-group">
+                                <button
+                                    [disabled]="!operatorIdTemp"
+                                    class="btn btn-confirm"
+                                    (click)="handleConfirmOperator()"
+                                >
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span class="text">{{ 'SELECT' | translate }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    } @else if (
+        fareConsoleSetting &&
+        (MsgID.DECK_TYPE_SUBMIT === fareConsoleSetting.msgID || MsgID.FARE_CONSOLE === fareConsoleSetting.msgID)
+    ) {
+        <ng-container>
+            <h1 class="text-center text-bold">{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</h1>
+            <div class="scrollbar">
+                <ng-scrollbar
+                    #scrollable
+                    [buttons]="true"
+                    trackClass="scrollbar-track"
+                    thumbClass="scrollbar-thumb"
+                    buttonClass="scrollbar-button"
+                >
+                    <ul class="fare-console-table">
+                        <li class="row">
+                            <div class="left">{{ 'DECK_TYPE' | translate }}</div>
+                            <div
+                                class="right"
+                                (click)="handleChangeSetting('deckType')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.deckType.label
+                                }"
+                            >
+                                @if (fareConsoleSetting.deckType.label) {
+                                    <p class="value">{{ fareConsoleSetting.deckType.label | translate }}</p>
+                                } @else {
+                                    <p class="value">{{ 'SELECT' | translate }}</p>
+                                }
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">Secondary BLS</div>
+                            <div
+                                class="right"
+                                (click)="handleChangeSetting('blsStatus')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.blsStatus
+                                }"
+                            >
+                                @if (!!fareConsoleSetting.blsStatus) {
+                                    <p class="value">
+                                        {{ (fareConsoleSetting.blsStatus === 1 ? 'ENABLE' : 'DISABLED') | translate }}
+                                    </p>
+                                } @else {
+                                    <p class="value">{{ 'SELECT' | translate }}</p>
+                                }
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'TIME' | translate }}</div>
+                            <div
+                                class="right"
+                                (click)="handleChangeSetting('setTime')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.time
+                                }"
+                            >
+                                @if (fareConsoleSetting.time) {
+                                    <p class="value">{{ fareConsoleSetting.time }}</p>
+                                } @else {
+                                    <p class="value">Enter</p>
+                                }
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'DATE' | translate }}</div>
+                            <div
+                                class="right"
+                                (click)="handleChangeSetting('setDate')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.date
+                                }"
+                            >
+                                @if (fareConsoleSetting.date) {
+                                    <p class="value">{{ fareConsoleSetting.date }}</p>
+                                } @else {
+                                    <p class="value">Enter</p>
+                                }
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'BUS_ID' | translate }}</div>
+                            <div
+                                class="right"
+                                (click)="handleChangeSetting('busId')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.busId
+                                }"
+                            >
+                                @if (fareConsoleSetting.busId) {
+                                    <p class="value">{{ fareConsoleSetting.busId }}</p>
+                                } @else {
+                                    <p class="value">Enter</p>
+                                }
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'COMPLIMENTARY_DAYS' | translate }}</div>
+                            <div
+                                class="right"
+                                (click)="handleChangeSetting('complimentaryDays')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.busId
+                                }"
+                            >
+                                @if (fareConsoleSetting.complimentaryDays) {
+                                    <p class="value">{{ fareConsoleSetting.complimentaryDays }}</p>
+                                } @else {
+                                    <p class="value">Enter</p>
+                                }
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left red" (click)="handleChangeSetting('deleteParameter')">
+                                {{ 'DELETE_PARAMETERS' | translate }}
+                            </div>
+                        </li>
+                    </ul>
+                </ng-scrollbar>
+            </div>
+            <div class="btn-group">
+                <!-- <div class="btn btn-cancel" (click)="handleConfirmFareConsole(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div> -->
+                <div class="btn btn-confirm" (click)="handleConfirmFareConsole(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </ng-container>
+    }
+</div>

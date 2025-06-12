@@ -1,0 +1,55 @@
+<div class="load-parameter-page">
+    <!-- <div *ngIf="step === 1" class="step-1">
+        <h2 class="title">{{ 'LOAD_PARAMETERS' | translate }}</h2>
+        <div class="content">
+            <p>{{ 'PRESS_LOAD_PARAMETER_BUTTON' | translate }}</p>
+            <div class="button" (click)="handleSaveTransaction()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <div class="text">{{ 'LOAD_PARAMETER' | translate }}</div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <confirm-dialog
+        *ngIf="step === 1"
+        [title]="'LOADING_FILES_FROM_SD' | translate"
+        [content]="'PLEASE_WAIT' | translate"
+    >
+        <div class="progress-bar" content>
+            <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+        </div>
+    </confirm-dialog> -->
+
+    <div *ngIf="step === 1" class="progress-wrapper">
+        <h2 class="title">{{ 'LOADING_FILES_FROM_SD' | translate }}</h2>
+        <div class="content">{{ 'PLEASE_WAIT' | translate }}</div>
+        <div class="progress-bar" content>
+            <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
+        </div>
+    </div>
+
+    <div *ngIf="step === 2" class="confirmation">
+        <h2 class="title">{{ 'SUCCESS' | translate }}</h2>
+        <div class="content">
+            <div class="confirm">{{ 'PARAMETER_FILES_LOADED' | translate }}</div>
+            <div class="btn-group">
+                <div class="btn btn-confirm" (click)="handleFinishTransaction()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'OKAY' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <confirm-dialog
+        *ngIf="step === 3"
+        [title]="'SUCCESS' | translate"
+        [content]="'PARAMETER_FILES_LOADED' | translate"
+        [btnOK]="true"
+        (onOK)="handleFinishTransaction()"
+    >
+        <div style="margin-bottom: 20px" icon>
+            <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+        </div>
+    </confirm-dialog> -->
+</div>

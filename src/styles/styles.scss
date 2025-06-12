@@ -1,0 +1,191 @@
+// @use '_theme' as theme;
+@use '@angular/material' as mat;
+@include mat.core();
+
+@import '_variables';
+@import '_fonts';
+@import '_reset';
+@import '_scrollbar';
+@import '_typography';
+@import 'theme';
+
+.cdk-overlay-pane {
+    background-color: white;
+}
+
+.custom-table {
+    width: 100%;
+    font-size: 28px;
+    border: 3px solid $madt-bg-dark-1;
+
+    td {
+        background-color: $madt-bg-dark-2;
+        color: white;
+        border: 5px solid $madt-bg-dark-1;
+        padding: 10px 15px;
+    }
+}
+
+.link-button {
+    text-decoration: underline;
+    background-color: transparent;
+    color: white;
+    display: flex;
+    justify-content: center;
+    border: none;
+    align-items: center;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.text-error {
+    color: $red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.service-input {
+    .content {
+        width: 60%;
+        margin: auto;
+        margin-top: 60px;
+
+        .additional-service {
+            text-align: center;
+            h3 {
+                font-size: 32px;
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        .input-group {
+            text-align: left;
+            margin-top: 20px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            padding-bottom: 40px;
+
+            p {
+                font-size: 28px;
+            }
+
+            input {
+                width: 100%;
+                height: 72px;
+                font-size: 24px;
+                padding: 10px;
+                margin-top: 10px;
+                background-color: #475057;
+                border: none;
+                color: $white;
+                font-weight: $font-weight-light;
+                border-radius: 4px;
+                box-shadow: inset 0 4px 4px rgb(0 0 0 / 0.25);
+            }
+        }
+    }
+}
+
+.btn {
+    min-height: 80px;
+    padding: 0 20px;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out 0s;
+
+    &:active {
+        transform: scale(1.01);
+    }
+
+    &-cancel {
+        background-color: $madt-color-red;
+    }
+
+    &-confirm {
+        background-color: $madt-bg-light-1;
+    }
+
+    border: none !important;
+
+    &:disabled {
+        background-color: $color-charcoal-grey !important;
+        > * {
+            filter: brightness(0.8);
+        }
+    }
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    // padding-top: 0px;
+    // padding-bottom: 0px;
+    margin-top: 3%; /*you can tweak around with this, */
+    margin-bottom: 4px; /*and this*/
+}
+
+/*you also have to adjust the label, after the above*/
+.mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+    top: 50%;
+}
+.mdc-floating-label--float-above {
+    top: 80% !important;
+}
+
+.mat-mdc-text-field-wrapper .mat-mdc-select-value {
+    font-size: 28px;
+}
+
+.mat-mdc-text-field-wrapper {
+    border-radius: 4px !important;
+    background-color: #475057;
+    border: none;
+    font-weight: $font-weight-light;
+    border-radius: 4px;
+    outline: none !important;
+    box-shadow: inset 0 4px 4px rgb(0 0 0 / 0.25);
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__trailing {
+    border-width: 0px !important;
+}
+
+.mat-mdc-select-arrow {
+    color: white !important;
+}
+
+.mat-mdc-select-arrow svg {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.mat-mdc-option {
+    font-size: 28px !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+.mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+    background-color: #017a8d !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+
+.mdc-list-item__primary-text {
+    color: white !important;
+}
+
+.mat-mdc-select-min-line {
+    color: white !important;
+    font-weight: 500 !important;
+}
+
+.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after {
+    color: white !important;
+}

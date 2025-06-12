@@ -1,0 +1,41 @@
+<div class="printer-status">
+    <!-- <div class="back-button" (click)="goBack()">Back</div> -->
+    <ng-container *ngIf="printStatus.status">
+        <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+        <div class="title">In Service</div>
+        <div class="content">Printer Status is In Service</div>
+        <div class="btn-group">
+            <!-- <div *ngIf="btnCancel" class="button button-cancel" (click)="handleClick('cancel')">
+            <img src="/assets/images/icons/main/close.svg" alt="" />
+            <span>{{ 'CANCEL' | translate }}</span>
+        </div>
+        <div *ngIf="btnConfirm" class="button button-confirm" (click)="handleClick('confirm')">
+            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+            <span>{{ 'CONFIRM' | translate }}</span>
+        </div> -->
+            <div class="button button-ok" (click)="goBack()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>OK</span>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!printStatus.status">
+        <img src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+        <div class="title">Out Of Service</div>
+        <div class="content">Printer Status is Out Of Service</div>
+        <div class="btn-group">
+            <!-- <div *ngIf="btnCancel" class="button button-cancel" (click)="handleClick('cancel')">
+            <img src="/assets/images/icons/main/close.svg" alt="" />
+            <span>{{ 'CANCEL' | translate }}</span>
+        </div>
+        <div *ngIf="btnConfirm" class="button button-confirm" (click)="handleClick('confirm')">
+            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+            <span>{{ 'CONFIRM' | translate }}</span>
+        </div> -->
+            <div class="button button-ok" (click)="goBack()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>OK</span>
+            </div>
+        </div>
+    </ng-container>
+</div>

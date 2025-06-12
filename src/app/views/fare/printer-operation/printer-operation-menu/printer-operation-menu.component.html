@@ -1,0 +1,30 @@
+<div class="device-operation-content">
+    <div class="back-button" (click)="goBack()">Back</div>
+    <h1 class="device-operation-title">Select Printer Operations</h1>
+    <div class="device-operation-button-group">
+        <button class="device-operation-button" (click)="handleSendNotify('', MsgID.FARE_PRINT_INSPECTOR_TICKET)">
+            Print Inspector Ticket
+        </button>
+        <!-- <button class="device-operation-button" (click)="handleNavigate('/daily-trip-log')">
+            Print Daily Trip Log
+        </button> -->
+        <button class="device-operation-button" (click)="handleSendNotify('', MsgID.FARE_PRINT_TEST_RECEIPT)">
+            Print Test Receipt
+        </button>
+        <button
+            class="device-operation-button"
+            (click)="handleSendNotify('/retention-ticket', MsgID.FARE_PRINT_RETENTION_TICKET)"
+        >
+            Print Retention Ticket
+        </button>
+        <button class="device-operation-button" (click)="handleSendNotify('', MsgID.FARE_PRINTER_ON_OFF, false)">
+            Printer ON
+        </button>
+        <button class="device-operation-button" (click)="handleSendNotify('', MsgID.FARE_PRINTER_ON_OFF, true)">
+            Printer OFF
+        </button>
+        <button class="device-operation-button" (click)="handleSendNotify('/status', MsgID.FARE_PRINTER_STATUS)">
+            Printer Status
+        </button>
+    </div>
+</div>

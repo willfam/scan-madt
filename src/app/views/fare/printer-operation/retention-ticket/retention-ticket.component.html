@@ -1,0 +1,79 @@
+<div class="printer-off">
+    @if (retentionTicket.msgID === MsgID.FARE_PRINT_RETENTION_TICKET1 && !!retentionTicket.cartAt) {
+        <div class="dialog">
+            <div class="dialog-header">
+                <p>Detect Cart at {{ retentionTicket.cartAt }}</p>
+            </div>
+            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+            <div class="cf-btn-group">
+                <div class="btn btn-cancel" (click)="handleDetectCart(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleDetectCart(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    } @else if (retentionTicket.msgID === MsgID.FARE_PRINT_RETENTION_TICKET2) {
+        @if (retentionTicket.status === ResponseStatus.PROGRESS) {
+            <div class="dialog">
+                <img class="error-icon" src="/assets/images/icons/maintenance/big-error.svg" alt="" />
+                <p class="confirm-msg">Card Detection at BEV1 is in Progress</p>
+                <div class="cf-btn-group">
+                    <div class="btn btn-cancel" (click)="handleStopDetectCard()">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        } @else if (retentionTicket.status === ResponseStatus.SUCCESS) {
+            <div class="dialog">
+                <div class="dialog-header">
+                    <p>Card Details</p>
+                </div>
+                <ul>
+                    <li>
+                        <span>Card Number</span>
+                        <span>{{ retentionTicket.cardDetail?.id }}</span>
+                    </li>
+                    <li>
+                        <span>Card Type</span>
+                        <span>{{ retentionTicket.cardDetail?.value }}</span>
+                    </li>
+                </ul>
+                <p class="confirm-msg">Please retain card.</p>
+                <div class="cf-btn-group">
+                    <div class="btn btn-cancel" (click)="handleStopDetectCard()">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </div>
+                    <div class="btn btn-confirm" (click)="handlePrintRetention()">
+                        <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                        <span>{{ 'Print Retention' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        }
+    } @else {
+        <div>
+            <div class="back-button" (click)="goBack()">Back</div>
+            <h2 class="title">Print Retention Ticket</h2>
+            <div class="content">
+                <div class="button-control">
+                    <div class="button" (click)="handleSelectCV(1)">
+                        <div class="icon-text">
+                            <div class="text">{{ 'CV_COUNT' | translate: { count: 1 } }}</div>
+                        </div>
+                    </div>
+                    <div class="button" (click)="handleSelectCV(2)">
+                        <div class="icon-text">
+                            <div class="text">{{ 'CV_COUNT' | translate: { count: 2 } }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

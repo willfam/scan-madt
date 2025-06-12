@@ -1,0 +1,50 @@
+<ng-container>
+    <!-- <app-header screen="ticketing"></app-header> -->
+    <div class="top-up-page">
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <img src="/assets/images/icons/ticketing/ticket.svg" />
+                <a [routerLink]="['/fare']">Fare</a>
+                <span>></span>
+                <p>Top Up</p>
+            </div>
+            <div class="madt-content">
+                <div class="top-up">
+                    <div class="back-button" (click)="goBack()">Back</div>
+                    <div *ngIf="step === 1">
+                        <h2 class="title">Select Amount to Top Up</h2>
+                        <div class="content">
+                            <div class="btn-group">
+                                @for (topUpAmount of topUpAmounts; track topUpAmount) {
+                                    <button class="button" (click)="handleSelectAmt(topUpAmount)">
+                                        <div class="text">{{ topUpAmount }} Cents</div>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="step === 2">
+                        <confirm-dialog
+                            [title]="'Proceed to Top Up'"
+                            [content]="'You are about to Top Up ' + selectedAmt + ' Cents'"
+                            [btnCancel]="true"
+                            [btnConfirm]="true"
+                            (onCancel)="handleConfirmTopUpAmt(false)"
+                            (onConfirm)="handleConfirmTopUpAmt(true)"
+                        >
+                        </confirm-dialog>
+                    </ng-container>
+
+                    <ng-container *ngIf="step === 3">
+                        <confirm-dialog title="Success" content="Top Up Success" [btnOK]="true" (onOK)="handleFinish()">
+                            <div style="margin-bottom: 20px" icon>
+                                <img src="/assets/images/icons/maintenance/big-success.svg" alt="" />
+                            </div>
+                        </confirm-dialog>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

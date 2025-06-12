@@ -1,0 +1,9 @@
+@import 'styles/_variables.scss';
+
+@mixin lta-print-bcv-results-theme($light-theme: false) {
+    @if $light-theme {
+        .print-bcv-results-page {
+            color: $black;
+        }
+    }
+}

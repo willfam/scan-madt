@@ -1,0 +1,391 @@
+export const MsgID = {
+    BOOT_UP: 1,
+    OUT_OF_SERVICE_MISSING_DATA: 2,
+    OUT_OF_SERVICE_INFO: 3,
+    SHUTTING_DOWN: 4,
+    DAGW_OPERATION: 5,
+    TRIGGER_DAGW_OPERATION: 6,
+    TRIGGER_BOLC_STATUS: 7,
+    CHANGE_BOLC_STATUS: 8,
+    SD_FOR_UPGRADING: 9,
+    SD_FOR_UPGRADING_FROM_TO: 10,
+
+    START_TRIP: 12,
+    START_TRIP_GET_SERVICE_LIST: 13,
+    START_TRIP_GET_FARE_TRIP_DETAILS: 14,
+    START_TRIP_BUS_STOP_LIST: 15,
+    START_TRIP_SUBMIT_FARE_TRIP: 16,
+    START_TRIP_SUBMIT_SERVICE: 17,
+    START_TRIP_POP_UP_MESSAGE: 18,
+    START_TRIP_CANCEL_FLOW: 11,
+    START_TRIP_SELECT_FARE_DETAIL_BTN: 53,
+    START_TRIP_INFORMATION_FOR_SPECIAL_CASE: 54,
+    BUS_OPERATION_MENU: 100,
+
+    END_SHIFT: 19,
+
+    BC_TAP_CARD_LOGIN: 20,
+    BC_TAP_CARD_PIN: 21,
+    BC_TAP_CARD_DUTY: 22,
+
+    MANUAL_LOGIN: 24,
+    MANUAL_LOGIN_PIN: 25,
+    MANUAL_LOGIN_STAFF_ID: 26,
+    MANUAL_LOGIN_DUTY: 27,
+    MANUAL_LOGIN_PIN2: 28,
+
+    MS_TAP_CARD_LOGIN: 40,
+    MS_TAP_CARD_PIN: 41,
+
+    END_TRIP: 29,
+    END_TRIP_TYPE: 30,
+    END_TRIP_CANCEL: 31,
+    // END_TRIP_BUS_STOP_LIST: 31,
+    END_TRIP_SUBMIT: 32,
+    // END_TRIP_REASON: 33,
+    END_TRIP_SUBMIT_CANCEL: 33,
+    END_TRIP_SUBMIT_REASON: 34,
+    END_TRIP_SUBMIT_COMP_TICKET: 35,
+    END_TRIP_SUBMIT_BREAKDOWN_TICKET: 36,
+
+    FARE_CONSOLE: 80,
+    DECK_TYPE_LIST: 81,
+    DECK_TYPE_SUBMIT: 82,
+    BLS_STATUS_SUBMIT: 83,
+    TIME_SUBMIT: 84,
+    DATE_SUBMIT: 85,
+    COMPLIMENTARY_DAYS_SUBMIT: 86,
+    DELETE_PARAMETER: 87,
+    FARE_CONSOLE_SUBMIT: 88,
+    FARE_CONSOLE_CANCEL: 89,
+    COMMISSION_BUS_ID: 90,
+    COMMISSION_OPERATOR: 91,
+    COMMISSION_BUS_ID_SUBMIT: 92,
+
+    MAIN_PAGE_DATA: 101,
+    CV_STATUS: 102,
+    CV_ICONS: 103,
+    UPDATE_FARE_BUS_STOP: 104,
+    UPDATE_FMS_BUS_STOP: 105,
+    UPDATE_HEADWAY: 106,
+    UPDATE_FARE_BUS_STOP_LIST: 107,
+    MAIN_UP_DOWN_BTN: 108,
+    MAIN_UPDATE_FARE_BUS_STOP: 109,
+    NEXT_BUS_INFO: 118,
+
+    BOOT_UP_COMMISSIONING: 150,
+    LOGIN_COMMISSIONING: 151,
+
+    TIMEOUT_MESSAGE: 110,
+    EXTERNAL_DEVICES: 111,
+    TEST_PRINT: 112,
+    EXT_DEVICE_SUBMIT: 113,
+    EXT_DEVICE_CANCEL: 114,
+
+    LOGOUT: 115,
+
+    LANGUAGE: 116,
+    LANGUAGE_SUBMIT: 117,
+
+    MAIN_FREE: 140,
+    MAIN_FREE_SUBMIT: 141,
+    MAIN_REAR_DOORS: 142,
+    MAIN_REAR_DOORS_SUBMIT: 143,
+    LOCK: 144,
+    LOCK_CONFIRM: 145,
+    UNLOCK_SUBMIT: 146,
+    CV_UPGRADE: 147,
+    IGNITION_OFF: 148,
+    BUS_OFF_ROUTE: 149,
+    AUTO_DISABLE_BLS: 152,
+
+    BREAKDOWN: 155,
+    BREAKDOWN_TYPE: 156,
+    BREAKDOWN_BUS_STOP_LIST: 157,
+    BREAKDOWN_SUBMIT: 158,
+    BREAKDOWN_SUBMIT_REASON: 159,
+    BREAKDOWN_SUBMIT_COMP_TICKET: 160,
+    BREAKDOWN_PROCESS_COMP_TICKET: 161,
+    BREAKDOWN_SUBMIT_BREAKDOWN_TICKET: 162,
+    BREAKDOWN_PROCESS_BREAKDOWN_TICKET: 163,
+    BREAKDOWN_SUBMIT_WO_PRINT: 164,
+
+    MAIN_FRONT_DOOR: 165,
+    MAIN_FRONT_DOOR_CV1: 166,
+    MAIN_FRONT_DOOR_CV2: 167,
+    MAIN_FRONT_DOOR_CANCEL: 168,
+
+    MAIN_REDEEM: 170,
+    MAIN_REDEEM_SUBMIT: 171,
+    MAIN_REDEEM_CANCEL: 172,
+
+    MAIN_CASH: 200,
+    MAIN_CASH_SINGLE_SUBMIT: 201,
+    MAIN_CASH_MULTI_SUBMIT: 202,
+    MAIN_CASH_MULTI_CANCEL: 203,
+    MAIN_CASH_INSPECTOR_TICKET: 204,
+    MAIN_CASH_FARE_BOX: 205,
+    MAIN_CASH_FARE_CALCULATION_BUS_STOP: 206,
+    MAIN_CASH_FARE_CALCULATION: 207,
+    MAIN_CASH_FARE_CALCULATION_SUBMIT: 208,
+    MAIN_CASH_FARE_CALCULATION_CANCEL: 209,
+
+    //maintenance
+    MAINTENANCE_APP_UPGRADE: 48,
+    MAINTENANCE_UPGRADE_SUBMIT: 49,
+    MAINTENANCE_PARAMETER: 50,
+    MAINTENANCE_FMS: 57,
+    MAINTENANCE_FARE_CONSOLE: 80, // use the same msg with main tab
+    MAINTENANCE_DECK_TYPE_LIST: 81, // use the same msg with main tab
+    MAINTENANCE_DECK_TYPE_SUBMIT: 82, // use the same msg with main tab
+    MAINTENANCE_BLS_STATUS_SUBMIT: 83, // use the same msg with main tab
+    MAINTENANCE_TIME_SUBMIT: 84, // use the same msg with main tab
+    MAINTENANCE_DATE_SUBMIT: 85, // use the same msg with main tab
+    MAINTENANCE_COMPLIMENTARY_DAYS_SUBMIT: 86, // use the same msg with main tab
+    MAINTENANCE_DELETE_PARAMETER: 87, // use the same msg with main tab
+    MAINTENANCE_FARE_CONSOLE_SUBMIT: 88, // use the same msg with main tab
+
+    MAINTENANCE_VERSION_INFO: 59,
+
+    MAINTENANCE_BUS_ID: 90, // use the same msg with main tab
+    MAINTENANCE_OPERATOR: 91, // use the same msg with main tab
+    MAINTENANCE_BUS_ID_SUBMIT: 92, // use the same msg with main tab
+
+    MAINTENANCE_EXTERNAL_DEVICES: 111, // use the same msg with main tab
+    MAINTENANCE_TEST_PRINT: 112, // use the same msg with main tab
+    MAINTENANCE_EXT_DEVICE_SUBMIT: 113, // use the same msg with main tab
+    MAINTENANCE_EXT_DEVICE_CANCEL: 114, // use the same msg with main tab
+
+    MAINTENANCE_RESULT_NOTIFICATION: 93,
+
+    //fare
+    FARE_SHOW_CV_STATUS: 120,
+    FARE_SET_CV_ENTRY_EXIT: 121,
+    FARE_CV_MODE_CONTROL: 122,
+    FARE_CHANGE_CV_MODE_CONTROL: 123,
+    FARE_POWER_ALL_CV: 124,
+    FARE_RESET_ALL_CV: 125,
+    FARE_CV_POWER_CTRL: 126,
+    FARE_CHANGE_CV_POWER_CTRL: 127,
+
+    FARE_PRINT_INSPECTOR_TICKET: 130,
+    FARE_PRINT_TEST_RECEIPT: 131,
+    FARE_PRINT_RETENTION_TICKET: 132,
+    FARE_PRINT_RETENTION_TICKET1: 133,
+    FARE_PRINT_RETENTION_TICKET2: 134,
+    FARE_PRINT_RETENTION_TICKET3: 135,
+    FARE_PRINT_RETENTION_TICKET4: 136,
+    FARE_PRINTER_ON_OFF: 137,
+    FARE_PRINTER_STATUS: 138,
+
+    FARE_CANCEL_RIDE_CV1: 181,
+    FARE_CANCEL_RIDE_CV1_CANCEL: 182,
+    FARE_CANCEL_RIDE_CV1_SUBMIT: 183,
+    FARE_CANCEL_RIDE_CV1_CANCEL2: 184,
+    FARE_CANCEL_RIDE_CV2: 185,
+    FARE_CANCEL_RIDE_CV2_CANCEL: 186,
+    FARE_CANCEL_RIDE_CV2_SUBMIT: 187,
+    FARE_CANCEL_RIDE_CV2_CANCEL2: 188,
+
+    FARE_CONCESSION_CV1: 191,
+    FARE_CONCESSION_CV1_CANCEL: 192,
+    FARE_CONCESSION_CV1_SUBMIT: 193,
+    FARE_CONCESSION_CV1_CANCEL2: 194,
+    FARE_CONCESSION_CV2: 195,
+    FARE_CONCESSION_CV2_CANCEL: 196,
+    FARE_CONCESSION_CV2_SUBMIT: 197,
+    FARE_CONCESSION_CV2_CANCEL2: 198,
+
+    // All tabs
+    TRIGGER_FMS_STATUS: 43,
+    CHANGE_FMS_STATUS: 44,
+    TRIGGER_CRP_STATUS: 45,
+    CHANGE_CRP_STATUS: 46,
+    TRIGGER_BTS_STATUS: 51,
+    CHANGE_BTS_STATUS: 52,
+
+    // broadcast
+    LOGIN_SUCCESS: 8888, // only privately use in MADT
+    LOGOUT_SUCCESS: 9999, // only privately use in MADT
+    START_TRIP_SUCCESS: 10000, // only privately use in MADT
+    END_TRIP_SUCCESS: 10001, // only privately use in MADT
+} as const;
+
+export const CVLabels = {
+    1: 'Workfare',
+    2: 'PWD',
+    3: 'NSF',
+    4: 'Student',
+    5: 'Senior',
+    6: 'Children',
+    7: 'Staff',
+    8: 'Monthly Adult',
+    9: '',
+} as const;
+
+export const DagwOperationStatus = {
+    NA: 0,
+    SUCCESS: 1,
+    FAILURE: 2,
+} as const;
+
+export const ResponseStatus = {
+    SUCCESS: 1,
+    PROGRESS: 2,
+    ERROR: 3,
+    NA: 4,
+} as const;
+
+export const MsgSubID = {
+    REQUEST: 1, // Request information
+    RESPONSE: 2, // Response The Message ID should be same as the request Message ID
+    NOTIFY: 3, //Notify Update information. No response is required.
+} as const;
+
+export const CvTypes = {
+    CV1: 'CV1',
+    CV2: 'CV2',
+} as const;
+
+export const PageType = {
+    CANCEL: 'cancel',
+    CONCESSION: 'concession',
+} as const;
+// removes this once done upgrading to new message format
+export const MessageId = {
+    VEHICLE_JOURNEY: 'vehicle-journey',
+    VEHICLE_STATE: 'vehicle-state',
+    HEADWAY_TIME_TABLE: 'headway-time-table',
+    NEXT_BUS_INFO: 'next-bus-info',
+    CV_ICON_TAP_CARD: 'cv-icon-tap-card',
+    CV_AVAIL_STATUS: 'cv-avail-status',
+    AUTH: 'auth-status',
+    SHUTTING_DOWN: 'shutting-down',
+    GET_MAIN_TAB_DATA: 'get-main-tab-data',
+    SEND_FARE_BUS_STOP: 'send-fare-bus-stop',
+    CONNECTION_STATUS: 'connection-status',
+} as const;
+
+export const AuthStatus = {
+    LOGGED_IN: 'logged-in',
+    BOOT_UP: 'boot-up',
+    SIGN_IN: 'sign-in',
+    OUT_OF_SERVICE_INFO: 'out-of-service-info',
+    OUT_OF_SERVICE_MISSING_DATA: 'out-of-service-missing-data',
+    SELECT_LANGUAGE: 'select-language',
+    FARE_CONSOLE_SETTING: 'fare-console-setting',
+    SIGN_IN_TAP_CARD: 'sign-in-tap-card',
+    SIGN_IN_MANUAL: 'sign-in-manual',
+    BUS_OPERATION_MENU: 'bus-operation-menu',
+};
+
+export const HTTimeColor = {
+    green: '0x019646',
+    blue: '0x0F65A1',
+    orange: '0xC25500',
+    black: '0x000000',
+} as const;
+
+export const OutOfServiceType = {
+    WITH_INFO: 'with_info', // REMOVE THIS WHEN DONE UPDATING TO THE NEW FORMAT
+    NO_DATA: 'no_data', // REMOVE THIS WHEN DONE UPDATING TO THE NEW FORMAT
+    MISSING_DATA: 'MISSING_DATA',
+    PENDING_UPGRADE_CV: 'OUT_OF_SERVICE_PENDING_UPGRADE_CV',
+    PENDING_UPGRADE_READER: 'OUT_OF_SERVICE_PENDING_UPGRADE_READER',
+    PENDING_UPGRADE_CV_READER: 'OUT_OF_SERVICE_PENDING_UPGRADE_CV_READER',
+} as const;
+
+export const TopicsKeys = {
+    COMMISSIONING_DIGIT_KEY_IN: 'COMMISSIONING_DIGIT_KEY_IN',
+    START_TRIP: 'START_TRIP',
+    MAINTENANCE: 'MAINTENANCE',
+    MAIN_TAB: 'MAIN_TAB',
+    FARE_TAB: 'FARE_TAB',
+    ALL_TAB: 'ALL_TAB',
+    MAINTENANCE_FARE: 'MAINTENANCE_FARE',
+};
+
+export const CvStatusType = {
+    NO_TAPPING: 1,
+    DISCONNECTED: 2,
+    ENTRY: 3,
+    ENTRY_EXIT: 4,
+    EXIT: 5,
+    FREE: 6,
+    NA: 7,
+} as const;
+
+export const CvDirTypeArray = Object.entries(CvStatusType).map(([key, value]) => ({ key, value }));
+
+export enum StartTripTypes {
+    FMS_NO_INFO = 'FMS_NO_INFO',
+    FMS_VALID_INFO = 'FMS_VALID_INFO',
+    FMS_TRIP_INFO_MISMATCH = 'FMS_TRIP_INFO_MISMATCH',
+    FMS_BUS_STOP_MISMATCH = 'FMS_BUS_STOP_MISMATCH',
+}
+
+export const MessageKeys = {
+    FARE_TRIP_DETAILS_SUCCESS: 'FARE_TRIP_DETAILS_SUCCESS',
+};
+
+// export const TripDetailsType = {
+//     FMS_NO_INFO: 'FMS_NO_INFO',
+//     FMS_VALID_INFO: 'FMS_VALID_INFO',
+//     FMS_TRIP_INFO_MISMATCH: 'FMS_TRIP_INFO_MISMATCH',
+//     FMS_BUS_STOP_MISMATCH: 'FMS_BUS_STOP_MISMATCH',
+// };
+
+export const CommissioningType = {
+    IN_PROGRESS: 'COMMISSIONING_IN_PROGRESS',
+    CLEARING_ALL_DATA: 'COMMISSIONING_CLEARING_ALL_DATA',
+    COMPLETED_CLEANING: 'COMMISSIONING_COMPLETED_CLEANING',
+};
+
+export const FareCVStatus = {
+    1: 'IN SERVICE',
+    2: 'OUT OF SERVICE',
+    3: 'LOGON',
+    4: 'BROKEN',
+    5: 'PWR OFF',
+    6: 'BUSY',
+    7: 'NOT INSTALLED',
+    8: 'NO COMMS',
+} as const;
+
+export const FareCVSubStatus = {
+    0: '',
+    1: 'INVALID',
+    2: 'ENTRY',
+    3: 'EXIT',
+    4: 'AUTO',
+    5: 'ENQUIRY',
+    6: 'CANCEL RIDE',
+    7: 'FRONT EXIT',
+    8: 'CHKPT EXIT',
+    9: 'CHKPT ENTRY',
+    10: 'MAX PENALTY',
+    11: 'MIN PENALTY',
+} as const;
+
+export enum MainPagePopUp {
+    BUS_STOP_MISMATCH = 'FMS_BUS_STOP_MISMATCH',
+    TRIP_MISMATCH = 'FMS_TRIP_INFO_MISMATCH',
+    DRIVER_ID_CHANGES = 'DRIVER_ID_CHANGES',
+    DRIVER_BLOCKED_LOG_OFF = 'DRIVER_BLOCKED_LOG_OFF',
+    FMS_NO_INFO = 'FMS_NO_INFO',
+}
+
+// export const MainPagePopUpList = [
+//     MainPagePopUp?.BUS_STOP_MISMATCH,
+//     MainPagePopUp?.TRIP_MISMATCH,
+//     MainPagePopUp?.DRIVER_ID_CHANGES,
+//     MainPagePopUp?.DRIVER_BLOCKED_LOG_OFF,
+//     MainPagePopUp?.FMS_NO_INFO,
+// ];
+
+export const DEFAULT_TIMEOUT = 5000;
+export const DEFAULT_NOTIFICATION_TIMEOUT = 3000;
+
+export const LOCAL_STORAGE_KEY = {
+    AUTH: 'auth',
+};

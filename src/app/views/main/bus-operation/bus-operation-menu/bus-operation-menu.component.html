@@ -1,0 +1,25 @@
+<div class="lta-full-screen">
+    <div class="lta-logo"></div>
+    @if (loading) {
+        <ng-container>
+            <h3 class="title">{{ 'Receiving FMS Trip Details' | translate }}</h3>
+            <div class="content dot-loading">{{ 'Please wait...' | translate }}</div>
+        </ng-container>
+    } @else {
+        <ng-container>
+            <h3 class="title">{{ 'BO_START_SHIFT' | translate }}</h3>
+            <a class="link-button" [routerLink]="['/main/bus-operation/external-devices']">
+                <img src="assets/images/icons/main/ext-device-icon.svg" />
+                External Devices
+            </a>
+            <div class="btn-group">
+                @for (button of bustOperationButtons; track button.id) {
+                    <button class="btn btn-confirm" (click)="button.onClick($event)">
+                        <img [src]="button.imgSrc" alt="" />
+                        <span class="text">{{ button.label }}</span>
+                    </button>
+                }
+            </div>
+        </ng-container>
+    }
+</div>

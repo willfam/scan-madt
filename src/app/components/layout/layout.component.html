@@ -1,0 +1,16 @@
+<!-- <app-header></app-header> -->
+<main
+    [style]="{
+        filter: isConnecting ? 'grayscale(1)' : ''
+    }"
+>
+    <router-outlet></router-outlet>
+    @if (isConnecting) {
+        <div class="conneting-warpper">Connecting...</div>
+    }
+
+    @if (shuttingDown.show) {
+        <app-shutting-down [message]="shuttingDown.message || ''"></app-shutting-down>
+    }
+</main>
+<!-- <app-navbar> </app-navbar> -->
