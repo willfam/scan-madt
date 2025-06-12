@@ -10,7 +10,6 @@
 /lighttpd/htdocs/dist/3rdpartylicenses.txt
 
 # Node
-/node_modules
 npm-debug.log
 yarn-error.log
 
